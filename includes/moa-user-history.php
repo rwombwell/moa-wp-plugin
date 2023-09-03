@@ -21,7 +21,7 @@ class UserHistoryModule
         add_action('wp_ajax_nopriv_capture_link_click', array($this, 'capture_link_click'));
 
         // WP Hook to display user history in admin Edit User page
-        add_action('edit_user_profile', array($this, 'display_admin_user_history'));
+        add_action('edit_user_profile', array($this, 'display_single_user_history'));
 
         // WP Hook to load JS script into footer to collapse/expand session block history - we use the admin-footer hook 
         add_action('admin_footer', array($this, 'user_history_admin_footer'));
@@ -45,7 +45,6 @@ class UserHistoryModule
         if ($user_id && isset($_POST['url'])) {
             $clicked_url = $_POST['url'];
             $session_id = session_id();
-
             $this->wpdb->insert(
                 $this->table_name,
                 array(
@@ -96,7 +95,7 @@ class UserHistoryModule
      * (this is calculated as the difference of link and the next link's timestamps, with last link labelled as "N/A). A simple jQuery click handler
      * is included as a <script> block to handle the collapse/expand on the session header
      ***********************/
-    public function display_admin_user_history($user)
+    public function display_single_user_history($user)
     {
         // Retrieve unique session IDs and their start time for the specified user, ordered by time
         $user_sessions = $this->wpdb->get_results($this->wpdb->prepare("SELECT session_id, MIN(time) as session_start FROM $this->table_name WHERE user_id = %d GROUP BY session_id ORDER BY session_start DESC", $user->ID));
