@@ -1,0 +1,618 @@
+/**********************************************************************************
+*** WPUF STYLES - for POST FORMS only
+*** These are style changes to the default "WP User Frontend" Plugin (for users to create and edit posts)
+*** Used to allow posts to be created, edited and listed from web site
+*** Copyright 2021 Daemon Rob Wombwell
+***********************************************************************************/
+/* WPUF FORM BACKGROUND - each form's background */ 
+.wpuf-form-layout1{
+    background: #d9dbdd;
+    border-radius: 5px;
+    padding-top: 10px;
+}
+/* and the form labels assuming positions on top of input box (changes in WPUF Form Settings>Display Settings */
+.wpuf-label {
+    float: none !important;         /* ensures the label is above the form, default is to left */
+    font-weight: 500 !important; 
+    margin-left: 0.6rem!important;
+    margin-bottom: 0!important;
+    width: 60%!important;           /* default seems to be 30%, unnecessaily small */
+    font-size: small;
+}
+.wpuf-fields {
+    width: 98% !important;
+    /*position: relative;
+    top: 8px;*/
+    margin-bottom: -30px;
+	font-size: 12px;
+
+}
+.wpuf-fields .textfield, .wpuf-fields textarea,  .wpuf-fields select  {
+    background: white!important;
+    border-radius: 5px;
+    padding:2px 5px;
+    color:black;
+}
+/* Readonly fields have this class in their li container*/
+.read-only  .textfield{
+    background-color: #f3f2c6!important;
+    color: #3d3d3d!important;
+}
+.wpuf-submit {
+    position: relative;
+    top: -10px;
+}
+/* Additional Update button placed at top of post form, it needs to be positionat right of form, and take up no size, hence absolute
+position, but also needs to be repositioned when the sidebar vanishes at screen max-width=450 */
+.moa-extra-update-button{
+    z-index: 99;
+    /*position: relative;
+    float: right;*/
+    position: absolute;
+    height: 40px;
+    top: 24px;
+    right: 27%;     /* positions it nicely to right of sidebar*/
+}
+@media screen and (max-width: 940px) {
+    .moa-extra-update-button{
+        right: 3%;     /* sidebar vanishes, so reposition button to right of screen*/
+    }
+}
+.ebsoc-static-map {         /* the div that holds the static map */
+    background:white;
+    padding:5px;
+    border-radius:8px;
+}
+
+
+/**********************************************/
+/* WPUF FORMS */
+/* NB, WPUF fieldname elements have the post form id appended, so we need [id^=..] or div[^class^..] to select based on start of string */
+/**********************************************/
+/* WPUF FORMS - The main display area for the form content, has too much padding set by theme style */
+#primary {
+    /* padding-top:  0px!important;*/
+    /* padding-left: 3%;*/
+}
+
+/* WPUF FORMS - Post Excerpt TextBox, default height (100px) too small so increase it to match Featured Image of 150px*/
+[id^='post_excerpt_'] {
+   /* height: 155px;*/
+    width: 95%;
+}
+.wpuf-col-small-half {
+    width:30%!important;
+}
+.wpuf-col-small-half-last {
+    width:70%!important;
+}
+
+
+/* WPUF forms - HTML div at start of form, too deep to lessen its height */
+div[class^='wpuf_custom_html'] { 
+    height: 20px;
+}
+/* WPUF form - Post Content TextBox - problem that default height (100px) too small so increase it */
+/* Selecting element requires identifing both start and end of string, eg "#post_content_413_ifr", "#post_content_261_ifr" */
+[id^='post_content_'][id$='ifr'] {
+    min-height: 300px !important;
+    max-height: 600px;
+}
+/* GeoJSON shapes coordinates field - wpuf default width is tiny, we may as well see the stuff */
+[for^="shapes_coords"] {
+     display:none;
+}
+[name='shapes_coords'] {  
+    width: 100% ;  
+    /*display:none;*/     /* set to none for production, othweise useful to be able to see it */
+}
+ul.wpuf-form li {
+    margin-left: 0px!important;
+    margin-bottom: 0px!important;
+    padding: 0px 10px!important;
+}
+  
+/* The shortcode label with the word "Shortcode" seems to be visible - so hide it this way*/
+[for^="shortcode"] {
+     display:none;
+}
+[class^="section_break"] {
+  padding:0px!important;
+  margin-bottom:0px!important;
+}
+
+.wpuf-section-wrap {
+    margin-left: 0px!important;
+    border-bottom: unset!important;
+    border-top: 1px solid #7f7e7e;
+}
+.wpuf-section-title {
+    margin-top:5px!important;
+    font-size: 14px;
+    color:#515252;
+    float: left;
+}
+.wpuf-section-details {
+    text-align: left!important;
+    margin-left: 100px;
+}
+.wpuf-get-next-index-no {
+    display:none;
+}
+/**********************************************/
+/* WPUF Featured Image - DIV that includes the image block and filename, caption & description block */
+.wpuf-attachment-list {
+    overflow:hidden!important;
+    height: auto;          /* need to makew this big enough to cover the 150x150 px image */
+    /* scroll */
+}
+
+/*******************************************
+ Attachment list box that includes image (but not the caption and dscription, default wiidth=200px, make it wider 
+ ******************************************/
+ ul.wpuf-form ul.wpuf-attachment-list li{
+    width:200px!important;
+}  
+ul.wpuf-form ul.wpuf-attachment-list .wpuf-file-input-wrap{
+    width:200px!important;
+}
+/* WPUF Forms - Featured Image - DIV that covers filename, caption & description block */
+.wpuf-file-input-wrap {
+    border: 1px solid darkgray;
+    width: 150px;
+    display: block;
+    position: relative;
+    left: -10px;
+    margin-right: 5px !important;
+}
+.wpuf-file-input-wrap >  textarea, .wpuf-file-input-wrap > input[type="text"]{
+    width: 100% !important;
+    font-size:12px !important;
+   color: black !important;
+   padding: 0px !important;
+   line-height:18px !important;
+   margin-left: 5px;
+   background:white!important;
+}
+ul.wpuf-form li .wpuf-fields ul.wpuf-attachment-list li .wpuf-file-input-wrap textarea:focus {
+    border: 1px solid #d9534f;
+}
+/* This is the Form's "Save Draft" anchor tag which we want displayed as button like the "Publish" button 
+*  We have manually copied the theme's button style here, so if we chaneg the theme then we have to also change this
+*  A better soln would be to change the source that renders the uitem to set the same 'wpuf-submit' class. 
+*  Don't know how to do that yet, changes to the '
+*/
+#wpuf-post-draft, #wpuf-cancel-button {
+    margin: 0;
+    height: 44px;
+    padding: 0.9em 1em;
+    border: none;
+    background: #03c4eb;
+    color: #fff!important;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    transition: all 0.2s ease;
+}
+#wpuf-post-draft:hover {
+    background: var(--moa-btn-color-hilite)!important;
+}
+/* We've added a "Custom HTML" fld to the Form to give a  "Cancel" button, it inherits the theme's "button" style 
+here we add some positioning to force it onto same line as the other buttons */
+#wpuf-cancel-button {
+    position: relative;
+    z-index: 999;
+    top: 67px;
+    margin-left: 150px;
+    padding: 0.5em 1em;
+    border: none;
+   
+}
+
+/* the displayed post's thumbnail is too big, force it to be a small thumbnail */
+.attachment-post-thumbnail {
+    max-width: 200px;
+    max-height:100px;
+    width: auto;
+    height: auto
+}
+
+/**************************
+* WPUF PROFILE & REGISTRATION FORM
+***************************/
+.wpuf-form-layout4 {
+    background:lightgray;
+    border-radius:8px;
+   
+}
+.wpuf-fields {
+    margin: 0px 10px
+}   
+.wpuf-form-add.wpuf-form-layout4 ul.wpuf-form li {
+    margin-bottom: 0px!important;
+}
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=text], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=text], 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=password], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=password], 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=email], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=email], 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=url], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=url], 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=number], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=number] {
+    border-radius: 5px;
+    margin: 0px 10px;
+    width:300px!important;
+}
+form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=text]:focus,
+ .wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=text]:focus, 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=password]:focus, 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=password]:focus, 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=email]:focus, 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=email]:focus, 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=url]:focus, 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=url]:focus, 
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type=number]:focus, 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=number]:focus,
+.textareafield:focus {
+    border: 1px solid #689F38!important;
+    /* background:#EAF6EB!important; */
+}
+#form-preview-stage.wpuf-style ul.wpuf-form .wpuf-fields input[type="text"][disabled] ,
+ .wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields input[type=text][disabled] {
+   color: #9a999965;
+   background:#F0F0F1!important;
+}
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields [name="first_name"], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields [name="last_name"], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields [name="user_login"], 
+.wpuf-form-add.wpuf-style ul.wpuf-form .wpuf-fields [type="password"]  {
+    max-width: 300px!important;
+}
+.textareafield {
+    width:90%!important;
+    border-radius:10px 10px 0px 10px!important;
+    margin:0 0px;
+}
+.pass-strength-result{
+    margin:0px 10px!important;   
+}
+.wpuf-form-add.wpuf-form-layout4 ul.wpuf-form li .wpuf-label {
+    margin:2px 20px;
+    color: #ba0052!important;
+    text-transform:capitalize!important;
+}
+.wpuf-form-add.wpuf-form-layout4 ul.wpuf-form li.wpuf-submit input[type=submit] {
+    margin:0px 10px;
+}
+
+/*******************************
+* WPUF Dashboard - Provides a table with rows listing each admin users' posts and offers edit or delete 
+********************************/
+/* the "CReate New Post" button at top of form, defaults to red button*/
+.wpuf-dashboard-container .wpuf-submit {
+    position: relative;
+    top: -10px;
+}
+.wpuf-dashboard-container table.items-table th, 
+.wpuf-dashboard-container table.items-table td {
+    padding: 5px !important; 
+    min-width: 75px;            /* necessary to set width of image column */
+}
+.wpuf-dashboard-container table.items-table td p {
+    font-size: .9rem!important;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 80px;
+    margin-bottom: 0px;
+}
+.wpuf-dashboard-container table.items-table td.thumbnail  {
+    margin-bottom: 0px;
+}
+.wpuf-dashboard-container table.items-table td {
+    vertical-align: top;
+}.wpuf-dashboard-container .wp-post-image{   /* targets the Featured Image in the dashboard rows*/
+    height: 85px;
+    width: auto;
+    margin-bottom: 0px;
+}
+.wpuf-form-add.wpuf-form-layout4 ul.wpuf-form li .wpuf-fields a.file-selector {
+    color:#8E2DB7!important;
+}
+/* The post edit images for delete and edit, defaults to display:inline and 20px width, this sets them above each other */
+.wpuf-dashboard-container table.items-table tr td.enable-post-edit img{
+    width: 18px;
+    /* padding: 5px 0; */
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+/* Change the default WPUF Dashboard behaviour at width 600px which turns off all data columns except 1st <td> which goes to flex */
+@media screen and (max-width: 600px) {
+    .wpuf-dashboard-container .wpuf-submit {    /* shift the "create new Post" button upwards to cleare the header text */
+        position: relative;
+        top: -40px;
+    }
+    .wpuf-dashboard-container table.items-table{
+        background: #EDEDED;
+    }
+    .wpuf-dashboard-container table.items-table tr {
+        border: none!important;
+        background: white;
+        margin: 10px 0px;
+        max-height: 120px;
+    }
+    .wpuf-dashboard-container table.items-table tr td {
+        display: inline-block!important;
+        padding: 3px!important;
+    }
+    .wpuf-dashboard-container table.items-table td:before {
+        content: none!important;
+    }
+    .wpuf-dashboard-container table.items-table tr td img {
+        margin:0!important;
+        max-width: 100px;
+    }
+    .wpuf-dashboard-container table.items-table tr td.category,
+    .wpuf-dashboard-container table.items-table tr td.excerpt, 
+    .wpuf-dashboard-container table.items-table tr td.post-status{
+        display: none!important;
+    }
+    .wpuf-dashboard-container table.items-table tr td.title{
+        width: 58%;
+        min-width:186px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /*font-size: 1.0rem;*/
+    }
+    .wpuf-dashboard-container table.items-table tr td.enable-post-edit{
+        float:right; 
+        transform: translate(0,20%);       /* vertically centers the item*/
+        padding-left: 0px;
+        width: 15px;
+        min-width: 15px;
+    }
+    .wpuf-dashboard-container table.items-table tr td.enable-post-edit img{
+        width: 15px;
+        padding-bottom: 10px;
+    }
+}
+
+
+/*******************************
+** DISPLAY POST LIST Styles - used to display listings
+** Each item's fields are in a <div class="listing-item"...><div ...>
+*******************************/
+.entry-title {
+    text-transform: none!important;
+}
+
+/* definitions for displaying Post image attachment. Note: use of different "parent child" selectors
+to get differnt image sizes for a "viewpoint" (perspective) div and the "all images" div */
+.ebsoc-attachment-featured article {
+    border: 1px solid #999; 
+}
+.ebsoc-attachment-featured .ebsoc-attachment-image {
+    height: auto;
+    width: 100%;
+    /* min-height: 260px; */
+    border: 3px solid lightgray;
+    margin-right:10px;
+}
+.ebsoc-attachment-viewpoint  .ebsoc-attachment-image {
+    width:100%; 
+    height:auto;
+}
+.ebsoc-attachment-allimages  .ebsoc-attachment-image {
+    width:150px; 
+    height:auto;
+}
+
+/*******************************
+* POST ITEM Styles - used to display individual post which is output by <theme>\content-single.php
+* The post content is inside container <article class="post"...
+*******************************/
+/* outer container for the post */
+article.post grid {
+    background: #EDEDED;
+    /* padding:10px;
+    margin:10px; */
+    border-radius: 5px;
+}
+/* inner container for the post */
+article.post  .entry-content{
+    padding:10px;
+    background: white;
+    border-radius: 5px;
+}
+/* post title, limit the width so it doesn;t overlap with post meta box on right
+rememebr to  wrap text inside it, note 80% max-width opk forwide screens but shrick to 70% on 425px  */
+article.post  .entry-content h3 { 
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width:80%;
+    margin-left:0;
+}
+@media screen and (max-width: 940px) {
+    article.post .entry-content h3 { 
+        max-width: 70%
+    }
+}
+/* Post meta data, (ie author and date), display this in top right corner 
+so position=absolute with right=26% as offet for sidebar, reduce to 0 when sidebar vanishes on media max-width=940   */
+ article.post  .post-meta{
+    position: absolute;
+    right: 26%;
+    top: 0;
+    padding: 4px 2px 1px 4px;
+    margin: 4px;
+    background: #EDEDED;
+    border-radius: 5px;
+ }
+ @media screen and (max-width: 940px) {
+    article.post .post-meta{
+        right: 0;
+     }
+}
+/* The post excerpt */
+article.post  .post-excerpt{
+    font-size: 1rem;
+    margin-top:10px;
+ }
+
+/* The thumbnail image*/
+article.post .wp-post-image, 
+article.post .ebsoc-attachment-featured{
+    display: block;
+    margin-right: 20px;
+    margin-top:10px;
+    /*margin-top: -20px; */
+    width: 30%;
+    float:left;
+}
+
+article.post .display-posts-listing  header{
+    display:inline-block;
+}
+
+
+/*******************************
+* LIST ITEM Styles - used to display individual post which is output by  Categories listing, called from archive.php which fires
+* <theme>\content-list.php. Each list item is in an <article class="list-article"...> and each item is a <div class="list-article-thumb"> and 
+* <div class="list-article-content">
+*******************************/
+/* The header with words "Category: maintenance Notes etc...", defaults to centre of header, resert to left */
+.archive.category .page-header {
+    padding-left: 20px!important;
+}
+/* outer container for the post */
+article.list-article {
+    margin: 10px 0;
+    padding-bottom: 0px!important;
+    background: #EDEDED;
+    padding: 0px 0px!important;
+    /*border-radius: 5px; */
+}
+article.list-article .list-article-thumb .wp-post-image {
+    margin: 0.5em;
+    /* width: 80px; */
+    /* border-radius: 5px; */
+    height:150px;
+    width:auto;
+}
+article.list-article .list-article-content {
+    border-radius: 5px;
+    margin-top: 5px;
+}
+article.list-article .list-article-content .list-article-meta {
+    margin-bottom: 0px;
+}
+article.list-article .list-article-content .entry-title {
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: unset;
+}
+article.list-article .post-meta {
+    position: relative;
+    top: -50px;
+    right:0;
+    float: right;
+    margin-right: 10px;
+}
+
+
+/*************************
+* ATTACHED IMAGES  - these are displayed in a MASONARY GRID - used when displaying the additional images in a post
+**************************/
+.masonary-grid {
+	columns: 250px;
+	column-gap: 10px; 
+}
+.masonary-grid article {
+  /* padding: 10px;
+  border-radius: 5px; */
+  border: 1px solid #999; 
+  background: #fff;
+  break-inside: avoid-column; 
+  margin-bottom: 10px; 
+}
+.masonary-grid article img {
+   width: 100%;
+}
+.ebsoc-attachment-title {
+    font-weight: 700;
+    font-size: 14px!important;
+    margin: 0px 5px;
+}
+.ebsoc-attachment-caption { 
+    font-size: 13px;
+    margin:0 5px;
+}
+.ebsoc-attachment-desc { 
+    font-size: 12px;
+    margin:0 5px;
+ }
+.leaflet-popup-image-container .ebsoc-attachment-title { 
+    display: none;
+}
+
+/***********************
+* FEATURED IMAGE Styles - don;t want to see these
+***********************/
+.ebsoc-attachment-featured .ebsoc-attachment-title,
+.ebsoc-attachment-featured .ebsoc-attachment-caption, 
+.ebsoc-attachment-featured .ebsoc-attachment-desc { 
+    display:none;
+ }
+
+/********** end of post attachment image tuff *****/
+
+.entry-content h3 {
+    margin-top: 10px;
+}
+.entry-thumbnail {  /* Float:left makes the next item (the map) appear on same line as thumbnail */
+    float: left;
+}
+.wp-post-image{     /* targets the individual post's Featured Image within .entry-thumbnail div */
+    height: 260px;  /* height matches the styling inbuild in "map-div" div */
+    width: auto;
+}
+
+.ebsoc-post-editlink {  /* The edit link on the Display Post page, shows to right of post title */
+    float: right;
+    position: relative;
+    top: -50px;
+    right: 40px;
+}
+.wpuf-col-short-half {
+    width: 35%!important;
+    float: left;
+}
+.wpuf-col-short-half-last {
+    width: 65%!important;
+    float: left;
+}
+.wpuf-col-one-third-small {
+    width: 10%!important;
+    float: left;
+}
+.wpuf-col-one-third-big {
+    width: 40%!important;
+    float: left;
+}
+
+@media screen and (max-width: 767px) {
+    .wpuf-col-short-half-last {
+        width: 100% !important;
+        float: none !important;
+    }
+    .wpuf-col-half, .wpuf-col-half-last {
+        width: 100% !important;
+        float: none !important;
+    }
+}

@@ -1,0 +1,647 @@
+/**********************
+* MODAL POPUP WINDOW 
+* CSS code to show a modal popup window
+* based on code here https://allurewebsolutions.com/open-wordpress-post-modal-without-plugin
+
+
+/**************
+** MODAL CONTROL CSS
+**************/
+#modal-btn-container{
+    position: absolute;
+    z-index: 1001;
+    top: 30px;
+}
+.modal-btn {
+    width: 70px;
+    height: 20px;
+    margin: auto;
+    position: absolute;
+    top: 5px;
+    /* left: 0; */
+    /* bottom: 0; */
+    right: 10px;
+    border: none;
+    border-radius: 5px;
+    /* background: #00bfff; */
+    color: white!important;
+    /*text-transform: uppercase;*/
+    z-index: 1002;
+}
+.modal-btn::before {
+    font-family: "Font Awesome 5 Free";
+    content:'\f2bd';        /* user in a circle icon */
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    font-size:20px;
+}
+
+    .hide {
+        display: none;
+   }
+    .show {
+        display: block !important;
+   }
+    .modal-wrapper {
+        z-index: 1002;
+        position: absolute;
+        left: calc((100vw - 600px)/2);
+        top: calc( 50vh - 250px);
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+   }
+    .modal {
+        display: none;
+        position: relative;
+        width: 600px;
+        min-height: 300px;
+        padding: 10px;
+        background: #eee;
+        color: #000;
+        text-align: center;
+   }
+   .modal input[type="text"]{
+       background-color: white!important;
+   }
+
+   .modal input[type="submit"], input[type="submit"]{
+       background: brown;
+   }
+   .modal .lwa-submit-links {
+        text-align:left;
+        padding:10px;
+
+   }
+   .modal .lwa-submit-links a{
+        color: brown;
+        font-size:1rem;
+   }
+      .modal input[type="checkbox"] {
+          margin-left:0;
+      }
+   .modal .lwa-submit-links a:hover{ text-decoration:underline; }
+
+   .modal .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 15px;
+        cursor: pointer;
+   }
+    .modal h1 {
+        font-size: 56px;
+        margin: 35px 0;
+   }
+    .modal .entry-content p {
+        font-size: 16px;
+   }
+
+@media only screen and (max-height: 640px) {
+   .modal-wrapper.styled .modal {
+        top:0px;
+    }
+}
+
+    
+/***************
+** MODAL STYLING
+**************/
+.modal-wrapper.styled {
+    /* background-color: rgb(0, 0, 0); */ /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-wrapper.styled .modal {
+    position: relative;
+    background-color:var( --moa-blue );
+    margin: 5vh auto;
+    /* vh from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%; /* Could be more or less, depending on screen size */
+    min-width: 360px;
+    max-width: 800px;
+    /* transition: all 2s ease; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* border-radius: 6px; */
+    /* left: calc((100vw - 600px)/2); */
+    /* top: calc( 50vh - 450px); */
+    /* padding: 20px 10px 10px; */
+    top: 0px;
+}
+
+.modal-wrapper.styled .modal .close-modal {
+    background: brown;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    /* padding:5px; */
+    font-size: 1.5rem!important;
+    line-height: 2rem!important;
+    color: white;
+    cursor: pointer;
+    width: 30px;
+    font-weight: 700px!important;
+}
+.modal-wrapper.styled #modal-content{
+      background: #eee;
+      /* border-radius:5px; */
+      /* height:350px; */
+}
+.modal-wrapper.styled .modal h3 {
+    font-size: 56px;
+    margin: 35px 0;
+    color: var(--ebsoc-green-dark);
+}
+
+.modal-wrapper.styled .modal .entry-content p {
+    font-size: 16px;
+}
+
+.modal-wrapper.styled .modal .loading {
+    display: block;
+    width: 100px;
+    margin: auto;
+    padding: 25vh 0;
+}
+
+.modal-wrapper.styled .modal p {
+    font-size: 16px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+    color: #444;
+    line-height: 1.5em;
+    margin-bottom: 0.8em;
+}
+
+.modal-wrapper.styled .modal h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-wrapper.styled .modal h1 {
+    font-size: 2.5em;
+    margin: 0.3em 0;
+}
+
+.modal-wrapper.styled .modal h2 {
+    font-size: 2.0em;
+    margin: 0.3em 0;
+}
+
+.modal-wrapper.styled .modal h3 {
+    font-size: 1.75em;
+    margin: 0.3em 0;
+}
+
+.modal-wrapper.styled .modal h4 {
+    font-size: 1.50em;
+    margin: 0.3em 0;
+}
+
+.modal-wrapper.styled .modal h5 {
+    font-size: 1.25em;
+    margin: 0.3em 0;
+}
+
+.modal-wrapper.styled .modal h6 {
+    font-size: 1.0em;
+    margin: 0.3em 0;
+    line-height: 1.5em;
+}
+
+.modal-content {
+    padding: 0 0.7em 0em 0.5em;
+}
+
+.modal-wrapper.styled .modal ul li, .modal-wrapper.styled .modal ol li {
+    line-height: 1em;
+    padding-bottom: 0.5em;
+   
+}
+
+.modal-wrapper.styled .modal ul li {
+    list-style: none;
+    margin-left: 30px;
+}
+modal-wrapper.styled .modal ol li {
+    list-style: decimal;
+    margin-left: 30px;
+}
+
+.modal-wrapper.styled .modal ol ol {
+    padding: 0.6em;
+}
+
+.modal-wrapper.styled .modal dt {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.modal-wrapper.styled .modal dd {
+    margin: 0;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.modal-wrapper.styled .modal hr {
+    border: 0;
+    height: 30px;
+    border-style: solid;
+    border-color: #8c8c8c;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+    background-color: white;
+    margin: 25px;
+}
+
+.modal-wrapper.styled .modal hr:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: #8c8c8c;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+
+.modal-wrapper.styled .modal blockquote {
+    display: block;
+    background: #fff;
+    padding: 15px 20px 15px 45px;
+    margin: 0 0 20px;
+    position: relative;
+
+    /*Font*/
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #666;
+    text-align: justify;
+
+    /*Borders - (Optional)*/
+    border-left: 7px solid #009c7b;
+    border-right: 1px solid #009c7b;
+
+    /*Box Shadow - (Optional)*/
+    -moz-box-shadow: 2px 2px 15px #ccc;
+    -webkit-box-shadow: 2px 2px 15px #ccc;
+    box-shadow: 2px 2px 15px #ccc;
+}
+
+.modal-wrapper.styled .modal blockquote::before {
+    content: "\201C"; /*Unicode for Left Double Quote*/
+
+    /*Font*/
+    font-family: Georgia, serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #999;
+
+    /*Positioning*/
+    position: absolute;
+    left: 10px;
+    top: 5px;
+}
+
+.modal-wrapper.styled .modal blockquote::after {
+    /*Reset to make sure*/
+    content: "";
+}
+
+.modal-wrapper.styled .modal blockquote a {
+    text-decoration: none;
+    background: #eee;
+    cursor: pointer;
+    padding: 0 3px;
+    color: #c76c0c;
+}
+
+.modal-wrapper.styled .modal blockquote a:hover {
+    color: #666;
+}
+
+.modal-wrapper.styled .modal blockquote em {
+    font-style: italic;
+}
+
+.modal-wrapper.styled .modal blockquote cite {
+    color: #999999;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+.modal-wrapper.styled .modal blockquote cite:before {
+    content: "\2014 \2009";
+}
+
+.modal-wrapper.styled .modal table {
+    color: #757575;
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 0 0 24px;
+    width: 100%;
+}
+
+.modal-wrapper.styled .modal input[type=password] {
+    margin: 5px 0 10px;
+    /* width: 25%; */
+    padding: 7px 0 7px 4px;
+    border: 1px solid #E3E3E3;
+}
+
+/*****************************
+* AJAX LOGIN & REGISTRATION Plugin
+*****************************/
+.lrm-user-modal {           /* lighten the background */
+    background: rgba(52, 54, 66, 0.6);
+}
+
+.lrm-form-bottom-message{
+    background: white;
+    color:black;
+    height:40px;
+    padding:10px;
+    border-radius:3px;
+}
+.lrm-form-bottom-message a.lrm-switch-to--reset-password:visited{
+     color:black;
+}
+/*********************
+* EBSOC-MODAL WordPress Social Login (WSL) plugin 
+*********************/
+.modal .wp-social-login-widget {
+    
+    position: relative;
+    margin: 10px auto;
+    width: 90%;
+    bottom: -90px;
+    background: white;
+    border-bottom:1px black solid;    
+
+}
+.wp-social-login-connect-with{
+    font-size:.9em;   
+    border-top:1px black solid;
+}
+
+.wp-social-login-provider-list {
+    float: left;
+}
+
+a.wp-social-login-provider{
+   color:white;
+   margin: 2px;
+   padding:8px;
+ }
+a.wp-social-login-provider::before{
+    content:''; 
+    font-size:1em;
+    width:32px;
+    height:32px;
+    position:relative;
+    top: 8px; 
+    left:-4px;
+    display:inline-block;
+} 
+
+a.wp-social-login-provider.wp-social-login-provider-google{
+   background:RGB(234,67,53);
+ }
+a.wp-social-login-provider.wp-social-login-provider-google::before{
+    background: url('/wp-content/plugins/wordpress-social-login/assets/img/32x32/wpzoom/google.png');
+} 
+
+a.wp-social-login-provider.wp-social-login-provider-twitter{
+   background:RGB(88,200,237);
+ }
+a.wp-social-login-provider.wp-social-login-provider-twitter::before{
+    background: url('/wp-content/plugins/wordpress-social-login/assets/img/32x32/wpzoom/twitter.png');
+} 
+
+/*****************************
+* EBSOC-MODAL WPUF LOGIN  FORM 
+*****************************/
+.modal.login #modal-content{
+    height:340px;
+}
+
+/*****************************
+* EBSOC-MODAL WPUF REGISTRATION FORM 
+*****************************/
+.modal .wpuf-form-layout1 {
+    /* background: #c0ccbb; */
+    /* border-radius: 5px; */
+    padding: 5px 0px;
+}
+.modal.register, .modal.profile{
+    top: calc( 50vh - 380px )!important;
+    padding-bottom:0px!important;
+}
+/* register formLABELS - need to be  on the left, and get rid of bold */
+.modal.register .wpuf-label, .modal.profile .wpuf-label {
+    float: left!important;          /* ensures the label is above the form, default is to left */
+    margin-bottom: 8px;
+    width: 180px!important;            /* default seems to be 30%, unnecessaily small */
+    text-align: left;
+}
+.modal.register .wpuf-label label, .modal.profile .wpuf-label label {
+    font-weight: 500!important;
+    font-size: .9rem;
+}
+.modal .wpuf-label .wpuf-help{
+    display:none;
+}
+
+/* make labels and input boxes in line if screen width greater than 767px (iPad)*/
+@media screen and (min-width: 767px) {
+    .modal #modal-content {
+        display: flex;
+        /* margin-bottom: 10px; */
+        flex-direction: column;
+    }
+    .modal-wrapper.styled .modal ul li {
+        list-style: none;
+        margin-left: 30px;
+        display: inline-flex;
+        float: left;
+    }
+    .modal.register .wpuf-label {
+        float: left!important;
+        margin-bottom: 8px;
+        width: 200px!important;
+        text-align: left;
+        /* display: inline-block; */
+    }
+
+}
+
+/* we don't want the "login" and "lost password" links which appear on th registration page */
+.modal.register .wpuf-submit + li {
+    display:none!important;
+    
+}
+
+/* the wpuf registration submit button needs a lot of reformatting */
+.modal .wpuf-submit  input[type=submit]{
+    background-color:brown!important;
+    border: none!important;
+    color: white;
+    line-height: 2em;
+    box-shadow: none;
+    text-decoration: none!important;
+    text-shadow: none!important;
+    border-radius:none;
+    float:left;
+    margin-left:10px;
+    height:45px!important;
+}
+
+/******************************
+* EBSOC CONTACT US PAGE - supports [ebsoc-contact-us] shortcode
+*******************************/
+.ebsoc-contact-us{
+  background:#e1e4e3;
+  padding: 20px;
+  margin:20px;
+  border-radius:5px;
+  width:70%;
+  min-width:300px;
+}
+.modal .ebsoc-contact-us{
+  width:94%;
+}
+.ebsoc-contact-us .flag-img{
+    position: absolute;
+    left: 30px;
+    top: 45px;
+    height: 100px;
+    width: auto;
+		display:none;
+}
+.ebsoc-contact-us h3{
+  text-align: center;
+  /* width:200px; */
+  /* margin: 10px 20px; */
+}
+/*.ebsoc-contact-us h3::after{
+    content: '\f1d8';
+    position: absolute;
+    font-family: FontAwesome;
+    display: inline-block;
+    margin: -10px 10px;
+    color:var(--ebsoc-green);
+    font-size: 24px;
+    text-shadow: 1px 1px 1px #151111;
+    rights: 0px;
+    left: calc( 75% );
+}
+*/
+.ebsoc-contact-us .intro{
+  padding:20px;
+  font-size:1rem;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+.ebsoc-contact-us label{
+  /* display:inline-block; */
+  width: 140px;
+  /* text-align: right; */
+  /* margin: 0px 10px 30px 0px; */
+  /* vertical-align:top; */
+  float: left;
+}
+.ebsoc-contact-us .errormsg{
+  display:block;
+  margin-left: 150px;
+  width:70%;
+  line-height:1.3;
+}
+.ebsoc-contact-us input[type=text]{
+ width:60%;
+ min-width:250px;
+ line-height:.6;
+}
+.ebsoc-contact-us textarea{
+  width:60%;
+  min-width:250px;
+  height: 200px;
+	background-color: white!important;
+}
+.ebsoc-contact-us .checkbox{
+  width:200px;
+  line-height:1;
+  margin-left: 80px
+}
+.ebsoc-contact-us input[type=submit]{
+  line-height:1;
+  margin-left: 20px;
+}
+.ebsoc-contact-us a, .ebsoc-contact-us a:hover, .ebsoc-contact-us a:visited {
+  color:maroon;
+}
+#ebsoc-contact-form-success{
+  display:none;
+  font-size:1.1rem;
+  height:240px;
+  margin:20px;
+  padding:20px;
+}
+#ebsoc-contact-form-success .success-img{
+    position: absolute;
+    left: 8px;
+    top: 25px;
+    height: 100px;
+    width: auto;
+}
+
+@media (max-width: 375px)  {
+  .ebsoc-contact-us{
+    margin: 5px 5px;
+  }
+ 
+  .ebsoc-contact-us h3{
+    margin: 0px 0px!important;
+    font-size:1.3rem!important;
+    line-height:1.4!important;
+  }
+  .ebsoc-contact-us .intro{
+    padding:5px;
+    font-size:1rem!important;
+    line-height:1.3!important;
+    margin-bottom:0px;
+  }
+  .ebsoc-contact-us p{
+    margin:3px;
+  }
+  .ebsoc-contact-us label{
+    width: 140px;
+    text-align: left;
+    margin: 0px;
+  }
+  .ebsoc-contact-us .errormsg{
+    margin-left: 0px;
+    width:100%;
+  }
+  .ebsoc-contact-us input[type=text]{
+   height:30px;
+  }
+  .ebsoc-contact-us textarea{
+    height: 150px;
+  }
+  .ebsoc-contact-us .checkbox{
+    line-height:1;
+    margin-left: 25px
+  }
+  #ebsoc-contact-form-success{
+      font-size:1rem;
+      line-height:1.3;
+      height:240px;
+      margin:0px;
+  }
+}
+
+

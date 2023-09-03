@@ -1,0 +1,186 @@
+/**************************************
+** Styles used by MOA SHORTCODES, specifcailly 
+**  - Journal Archives shortcode [moa-journal-list] on Journal Archive page
+**  - Technical Articles shortcode [moa-tech-article-list] on Technical Articles  page
+**************************************/
+
+/**************** 
+** JOURNAL ARCHIVE SHORTCODE [moa-journal-archive-list] - creates a flex design for the articles
+****************/
+.journal-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 20px 5%;
+      margin: 0px 0px 20px;
+      background-color: #c2bcc3;
+      padding: 36px 10px 10px 10px;
+      border-radius: 0 5px 5px 5px;
+  }
+  .journal-container-title{
+      position: relative;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--moa-blue);
+      background-color: #c2bcc3;
+      width: 230px;
+      border-radius: 15px 15px 0 0;
+      margin:0;
+  }
+  .journal-item{
+      /* border: 1px solid var(--moa-blue); */
+      padding: 2px;
+      min-height: 150px;
+      width: auto;
+      position: relative;
+  }
+  .journal-item:hover{
+      -webkit-box-shadow: 5px 5px 10px 0px rgba(128, 64, 64,1);
+      -moz-box-shadow: 5px 5px 10px 0px rgba(128, 64, 64,1);
+      box-shadow: 5px 5px 10px 0px rgba(128, 64, 64,1);
+      /* 5px 5px 10px 0px rgb(128, 64, 64);*/
+  }
+  .journal-link img{
+      -webkit-box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+      -moz-box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+      box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+  }
+  .journal-cover{
+      width:150px;
+      height:200px;
+  } 
+  .journal-caption{
+      text-align: center;
+      background-color: var(--moa-blue);
+      font-size: .9rem;
+      font-weight: 700;
+      color: white;
+      margin-top: 2px;
+      /* border: 2px solid white; */
+      width: 81%;
+      margin: 8px auto 0px;
+      border-radius: 12px;
+  }
+  .hide {
+      display:none;
+  }
+  /******* 
+  * JOURNAL ARCHIVE SHORTCODE 
+  * jQUERY MULTISELECT DROPDOWN - at the top of Jouirnal Listing page, used to select the Journal decade 
+  *******/
+  .journal-select-container {
+      position: relative;
+      margin: 20px 0px 0px 0px;
+      height:50px;
+  }
+ .ms-options-wrap {
+      width: 30%;
+      right: 10px;
+      margin: 0px 10px 10px;
+      position: relative;
+      top: -36px;
+      left: 120px;
+  }
+  .ms-options-wrap > button:hover,
+  .ms-options-wrap > button:focus {
+      background-color:white!important;
+      color:black!important;
+      border:1px solid black;
+      box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+  }
+  .ms-options-wrap.ms-active > .ms-options {
+      box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+  }
+  /******* 
+  * JOURNAL ARCHIVE SHORTCODE 
+  * PDFJS POPUP VIEWER - used to display an iframe so PDF extracts can be displayed to non-members 
+  * NB PDF Iframe sizes here are irrelevant, they are overwritten by PDFJS script instantiation & jQuery UI Dialog  
+  ********/
+  #popup-pdf{
+      width:90%;
+      height:100%;
+      margin:0 auto;
+      display:none;
+  }
+  /* this class is set as optional name jQuery UI Dialog box, use this to control style of the popup box for non members*/
+  .popup-pdf-dialog{
+      z-index:1000;
+      box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+      max-width:700px;
+  }
+  .ui-dialog .ui-dialog-titlebar-close:before {
+      content: "x";
+      top: -6px;
+      position: absolute;
+      left: 3px;
+  }
+  .ui-dialog .ui-dialog-content {
+      padding: 0 0;
+  }
+  .ui-dialog .ui-dialog-buttonpane button {
+      background: var(--moa-blue)!important;
+      color: white;
+      border: none;
+  }
+  .ui-dialog .ui-dialog-buttonpane button:hover {
+      background: darkred!important;
+  }
+  .dialog-footer-text{
+      padding: 0 5px;
+      font-size:.9rem;
+      background-color:#dad0ff;
+  }
+   
+/**************** 
+ ** TECHNICAL ARTICLES SHORTCODE [moa-tech-articles-list] - creates a flex design for the articles
+ ****************/
+       
+/*************** The main tech articles grid ***************/
+.tech-articles-container {
+    display:grid;
+    grid-template-columns: 15% 30% 30% 15% 1fr 1fr;
+    max-width: 95%;
+    margin:0px 1%!important;
+}
+.tech-articles-container .tech-articles-header {
+    background: darkgray;
+    color:white;
+}
+.tech-articles-container  > div {
+    background: #f3f4f5;
+    padding: 1px 5px;
+    border: solid 1px darkgray;
+    line-height: 1.4em;
+}
+.tech-articles-container > div.col2 {
+    background: lemonchiffon;
+}
+
+/*************** the SELECT yacht class container *****************/
+.article-select-container {
+    position: relative;
+    padding: 10px;
+    height:50px;
+    display:inline-block
+    /* position: fixed;
+    background: white;
+    top: 150px;
+    z-index: 1000; */
+}
+.article-select-container > select {
+    height: 28px;
+    line-height: 10px;
+    vertical-align: middle;
+    margin: 0px 20px;
+    padding: 0px;
+    min-width: 125px;
+    border: 1px solid #8e8e8e;
+}
+.article-select-container select:hover{
+    box-shadow: 6px 5px 7px -2px rgba(87,85,87,1);
+}
+#select-count{
+    display:inline-block;
+}

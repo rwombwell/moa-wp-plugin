@@ -1,0 +1,418 @@
+/*********************************************
+**********************************************
+**      UM FORMS (All, LOGIN, REGISTRATION etc)                **
+**********************************************
+*********************************************/
+/* the container for labels and input box */
+.um-field {
+    padding: 5px 0 0 0!important;
+}
+/* This makes the labels smaller and moves them closer to the form fields */
+.um-field-label {
+    /*margin-bottom: 0px!important;*/
+}
+.um-field-label label {
+    font-size: 14px !important;
+    line-height: 10px !important;
+    font-weight: 300 !important;
+    text-align: left;
+    display: block;
+    float: left;
+}
+/*****************
+* REGISTRATION FORM
+*****************/
+/* CONTAINER BOXES - UM applies this class to all container boxes (ie those containing the fields), previous we set CSS options when defining the form but this is easier amd nore global */
+.um-row {
+    padding: 10px 10px 10px 10px!important;
+    background-color:  #dcdcdc!important;
+    margin: 10px 0px 0px 0px!important;
+    border-width: 0px 0px 0px 0px!important;
+    border-style: solid!important;
+    border-radius: 5px!important;
+}
+/* in each form block ro the <p> element includesthe headings which have too much line height as default*/
+.um-row p{
+    line-height: 1.3rem;
+}
+/* Format the  "Intro" containers of each of the "personal", "boat" and "address blocks" */
+.form-intro-container {
+    margin-bottom: -20px!important; /* The first Container Box , which needs to overlap with the next one, hence nmargin-bottom setting.*/
+    line-height: 1.4em;
+    display: block;
+    font-size: .9em;
+}
+/* The container for the basic boat info, we can move this up because the password reveal eye is now pushed into the password field*/
+.boat-basic-container{
+    margin-top: -20px!important;
+}
+
+.personal-intro-container,
+.boat-intro-container,
+.addr-intro-container {
+    margin-bottom:10px!important;
+    padding:10px!important;
+}
+.boat-further-container{
+    margin-top: -40px!important;
+}
+
+/* The span that appears on each block part of the UM membership and registration forms */
+.form-part {
+    display:block;
+    font-size:.9em;
+    line-height:1.4em;
+    padding:15px;margin:-10px 10px 0px 0px;
+}
+/* The header within that block part, eg "PART 1 - BOAT DETAILS" */
+.form-part-header {
+    font-weight:700;
+		margin-top: 10px!important;
+}
+/* This calls covers ALL UM form's input boxes */ 
+.um-form-field {
+	border-radius: 5px;
+}
+.um-field-error {
+    clear: both;
+    width: fit-content;
+    z-index: 1;
+     /* css for a smooth shadow effect to the popup box */
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
+  0 2px 2px rgba(0,0,0,0.12), 
+  0 4px 4px rgba(0,0,0,0.12), 
+  0 8px 8px rgba(0,0,0,0.12),
+  0 16px 16px rgba(0,0,0,0.12);
+}
+/* this makes to top part of the Registration Form less big */
+.entry-content p:first-child{
+    font-size: 1.0rem;
+    margin: 0 0 0 0;
+}
+/* Password Reveal icon, set by default positions this below the password field, set by JS script code inserted in moa-um-functions.php
+with add_filter("um_confirm_user_password_form_edit_field","um_user_password_form_edit_field", 10, 2 );  */
+/*.um-faicon-eye, .um-faicon-eye-slash{
+    position: relative;
+    top: -2.5rem;
+    color: darkgray;
+    font-size: 1.5rem;
+}
+.um-faicon-eye:before, .um-faicon-eye-slash:before{
+    position: relative;
+}
+*/
+/* This moves the Help Question-Mark icons on the form up a tad, keeps the spaces between lines smaller */
+.um-tip i {
+    font-size: 18px;
+    position: relative;
+    top: -5px;
+}
+
+/******************************************
+* UM User Profiles - changed to accommodate list of user boat fields
+******************************************/
+/* Hide Header Display name for UM Profile form 253 */
+/* #post-253 .page-title{
+    display:none!important;
+}
+ */
+.um-cover-e img {       /* the cover image of the boat*/
+    border-radius: 10px;
+}
+.um-header {            /* holds user image and edit control */
+    position: relative;
+    padding: 0 0 25px 0;
+    border-bottom: solid 2px #eee;
+    min-height: 85px;
+    box-sizing: content-box !important;
+}
+.um-profile-photo {     /* cover image of the user  */
+    position: absolute;
+    z-index: 1;
+    /* top: -100px; */
+}
+
+/* .um-profile-meta {
+    display: none;
+}
+#um-meta-bio {
+    display: none;
+ }
+ */
+ .um-faicon-check, .um-faicon-cog {     /* Profile View: the sesstions cog, Profile Edit:  the Save tick mark  */
+    color:white;
+    top: 5px; 
+    position: relative; 
+ }
+ .um-faicon-check:hover, .um-faicon-cog:hover {     /* Profile View: the sesstions cog, Profile Edit:  the Save tick mark  */
+    color:red;
+ }
+ .um-faicon-check:before, .um-faicon-cog:before {     /* Profile View: the sesstions cog, Profile Edit:  the Save tick mark  */
+    content: "Click to edit Profile";
+ }
+ 
+/***********************
+* ACCOUNT TAB - PAYPAL
+***********************/
+.moa-um-account-paypal-tab .intro {
+	margin: 20px 0px;
+}
+
+.moa-um-account-paypal-tab .field{
+	margin: 10px;
+}
+.moa-um-account-paypal-tab .label{
+	width: 200px;
+	/* min-width:300px; */
+	display: inline-block;
+	text-transform: capitalize;
+	margin-right: 10px;
+}
+.moa-um-account-paypal-tab .data{
+	color: #00005548;
+	padding: 3px 10px;
+	text-transform: uppercase;
+	border: 1px solid #7b7b7b6d;
+	border-radius:3px;
+	width: 300px;
+	/* margin-left: 20px; */
+	display: inline-block;
+}
+
+
+/* PayPal icon - note must have font family "https://use.fontawesome.com/releases/v5.8.1/css/all.css" in header */
+/*.um-icon-paypal:before {							  
+	content: "\f1ed"; 
+	font-family: 'FontAwesome' !important;
+	font-size: 16px; 
+}*/
+/* PayPal icon - this works, tried the above but !important settings in UM's stylesheet prevents the right font-family being used 
+so this uses an image, see this ref: https://iconify.design/icon-sets/ion/logo-paypal.html */
+.um-icon-paypal:before {							  
+    content: url('https://api.iconify.design/ion-logo-paypal.svg?height=16');
+    vertical-align: -0.125em;
+}
+ 
+/*******************
+* UM PROFILE STYLES 
+*******************/
+ .um-profile-body {
+    background-color: rgb(207, 207, 207);
+    border-radius: 0px 0px 5px 5px;
+ /*    max-width: 800px !important; /* dont set this here, use WP-Admin>>UM Settings>>Appearance>>Profile page */
+    position: relative;
+    width: 100%;
+    top: -100px; 
+}  
+.um-profile-nav {
+    position: relative;
+    top: -100px;
+    border-radius: 5px 5px 0px 0px;
+}
+.um-profile-nav-main, .um-profile-nav-gallery{
+    float: right;
+}
+.um-profile-nav-main{
+    margin-right: 40px;
+}
+/*******************
+* UM PROFILE VIEWING STYLES 
+*******************/
+.um-profile.um-viewing div.um-field-label{
+    display:inline-block;
+}
+.um-profile-body .um-field-area:has( div ) {
+   background-color: #efefef;
+   display:inline-block;
+   border-radius: 5px;
+   min-width: 200px;
+   width: calc(100% - 12em);
+   padding: 3px 10px;
+   margin: 5px 0px;
+   float: right;
+   clear:right;
+}
+.um-profile-edit.um-trigger-menu-on-click:before {
+    content: "Click to Edit";
+    font-size: 1rem;
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: var(--moa-blue);
+    color: white;
+    border-radius: 5px;
+}
+.um-profile-edit.um-trigger-menu-on-click:hover:before {
+    background-color: darkred;
+    transition-duration: 0.25s;
+}
+/***********
+* UM PROFILE EDIT Styles
+************/
+.um-profile-body .um-field{     /* um-field includes label & input, this forces them onto same line */
+    clear: both;
+    margin: 5px 0px;
+   
+}
+.um-profile-body .um-field-label {
+    display: inline-block;
+    border-bottom: none !important;
+    padding-bottom: 0px;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    line-height: 1rem !important;
+    color: #727272!important;
+}
+.um-profile-body .um-field-label label {
+    font-size: unset!important;
+    font-weight: 600!important;
+}
+.um-profile-body .um-field-area:has( input ),
+.um-profile-body .um-field-area:has( select ){
+    background-color: rgb(207, 207, 207);
+    border-radius: 5px;
+    min-width: 200px;
+    width: calc(100% - 12em);
+    float: right;
+   clear:right;
+}
+/***********
+* Quick Save "tick" at top corner of the edit profile page. This is in white and its meaning unobvious, 
+* so add a :before this element saying  "QUICK SAVE" & change colors on the hover
+***********/
+.um-profile-edit-a.um-profile-save:before {
+    content: "QUICK SAVE";
+    font-size: 1rem;
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: var(--moa-blue);
+    color: white;
+    border-radius: 5px;
+}
+.um-profile-edit-a.um-profile-save:hover:before {
+    background-color: darkred;
+    transition-duration: 0.25s;
+}
+.um-faicon-check:hover, .um-faicon-cog:hover{ color: darkred; }
+.um-faicon-check, .um-faicon-cog{ color: var(--moa-blue); }
+.um-profile-edit i { 
+    font-size: 20px!important;
+    top:0; 
+}
+/********
+* The select box on UM forms
+********/
+.um-profile .um-form .select2-selection.select2-selection--single,
+.um-profile .um-form .select2-selection.select2-selection--single span,
+.um-field .select2.select2-container .select2-selection .select2-selection__arrow:before {
+    height: 1.8rem !important;
+    line-height:1.8rem!important;
+}
+
+
+/********
+*  Boat Description textarea - special setting for this, its the last field and needs a margin-bottom to push down next area if textfield expanded   
+*********/
+.um-profile-body #um_field_251_description .um-field-area{
+    margin-bottom: 20px;
+}
+.um-profile .um-form input[type=text],
+[type=textarea] textarea {
+    height: 1.8rem !important;
+    display: inline-block;
+    border-radius: 5px;
+}
+/*********
+* Save/Cancel Buttons at bottom
+*********/
+.um-profile input[type=submit]{
+    background-color: rgba(250, 1, 1, 0.658);
+    width: 200px;
+}
+.um-profile .um-button{
+    width:70%!important;
+    margin: 0px 15%!important;
+    text-transform: uppercase!important;
+}
+
+/* This positions the popup map button at right on the field next to it*/
+.moa-longlat-map-button{
+	height: 50px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: var(--moa-blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+/* The popup map button CLose "X", this position it at top right of popup map */
+.moa-popup-close{
+	width:20px!important;
+    float: right;
+    z-index: 401;
+    position: relative;
+    font-size: 24px;
+    font-weight: 900;
+    height: 20px;
+    line-height: 20px;
+}
+.moa-popup-close:hover{
+    color:white;
+}
+/*****************
+* Yacht Additional Images
+* 5 additional images are allowed, these sit inside a UM EDit Row CLassnamed as "yacht-additional-images"
+*****************/
+.yacht-additional-images{   /* The UM profile container for the grid images single column, must be full width  */
+    clear:both;
+}
+.yacht-additional-images .um-photo{ /* profile container div for images in viewing moed */
+    margin-top:0px!important;
+}
+.yacht-additional-images .um-col-1{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 2%;
+    margin: 0px 0px 20px;
+    
+}
+.yacht-additional-images .um-col-1 .um-field-area {
+    float: unset;
+    min-width: 100%;
+    min-height: 150px;
+    /* max-width: 18%; */
+    padding: 3px 2px;
+    background-image: url(/images/no-image-set.png);
+    background-repeat: no-repeat;
+    background-position:top ;
+}
+.yacht-additional-images .um-col-1  .um-field-image{
+    width: 16%;
+    padding: 5px!important;
+}
+.yacht-additional-images .um-col-1 .um-field .um-button {   /* the "Upload/Change Picture" button, make it smaller */
+    margin-left: 5%!important;
+    width: 100px!important;
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px!important;
+    /* margin-top: 0px!important; */
+    min-width: 90%;
+    padding: 0px!important;
+}
+.yacht-additional-images .um-col-1 .um-field .um-button:hover{
+    background-color: maroon;
+    color:white!important;
+}
+.yacht-additional-images .um-col-1 .um-field .um-single-image-preview{
+    height: 110px;
+    display: block;
+  
+}
+.yacht-additional-images .um-col-1 .um-field .um-single-image-preview > img {
+    height: auto;
+    width: 100%;
+}

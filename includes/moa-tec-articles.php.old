@@ -1,0 +1,529 @@
+<?php
+
+/**********************************************************
+* TECH ARTICLES  - LIST ALL ARTICLES FROM CSV FILE
+************************************************************/
+add_shortcode("moa-tech-articles-list", "moa_tech_articles_list_fn");
+function moa_tech_articles_list_fn( $atts, $content = null) {
+	
+	// add the jQuery plugin script aand css that adds checkbiooxes to the multiple select
+	wp_enqueue_script( 'jquery-multiple-plugin-js'   , plugins_url( '../js/jquery.multiselect.js', __FILE__ ));
+    wp_enqueue_style ( 'jquery-multiple-plugin-style', plugins_url( '../css/jquery.multiselect.css' , __FILE__ ));
+	
+    wp_enqueue_style ( 'moa-shortcodes-style', plugins_url( '../css/moa-shortcodes.css' , __FILE__ ));
+	
+	// get user's permissions 
+	$isMember = false;
+	if ( $user_id = get_current_user_id() ) {
+		$userdata = get_user_by('ID', $user_id );
+		$isMember = ( in_array( 'um_moa-admin', $userdata->roles ) || in_array( 'um_moa-member', $userdata->roles ) )? true : false;
+	}
+
+	// initialise variables that will accumulate html output
+    $html = '';
+    $row_count = 1;
+    $row = '';
+    $rows_all  = '';
+    $selectOptions = '<option value="all">All Articles</option>';
+      
+	$selectBoatClassOptions = '<option value="all">All</option>';
+	$BoatClassLast = '';
+
+    // Read all entries from the /tech-articles.csv spreadsheet into array,
+	$fpath = get_home_path()  . '/tech-articles.csv' ;		// $path will be "/var/www/vhosts/httpdocs/macwester.org.uk/journals"
+
+    // note <table class="table-responsive"> triggers a Bootstrap class library that makes the table scrollable on mobiles
+    $html .= '<div class="tech-articles-container">
+    <div>Article Title</div><div>Description</div><div>Author</div><div>Mac Class</div><div>Mac Class</div><div>Journal</div><div>Page</div>
+    </tr>';
+
+    if ( ($handle = fopen( $fpath, "r")) !== FALSE) {
+        $row1 = fgetcsv ($handle, 2000, ",") ;  // ignore line 1
+        while ( ($data = fgetcsv ($handle, 2000, ",") ) !== FALSE) {
+            $num = count( $data );      
+            $row_count++;
+            $row_title  = $data[2]; 
+            $row_desc   = $data[3];
+            $row_author = $data[4];
+            $row_season = $data[5];
+            $row_year   = $data[6];
+            $row_page_start = $data[7];
+            $row_page_num=$data[8];
+            $row_class  = $data[9];
+            $row_class_desc  = ($row_class != "") ? "Mac " . $row_class : "";
+            $row_journal = $row_year . $row_season;
+            
+            preg_match_all('/(26|27|28|Wight|Rowan|Crown|MAlin|Atalanta|Seaforth)/', $row_class, $matches);
+    		if( isset($matches[0][0]) ) {
+                $row_class_group = strtolower( $matches[0][0] );
+            } else {
+                $row_class_group = "non-specific";
+                $row_class_desc  = "non-specific";
+            } 
+            if ( !str_contains( $selectOptions , 'value="' . $row_class_group .'"' )  ){
+                $selectOptions .= '<option value="'  .  $row_class_group. '">'. $row_class_desc. '</option>';
+            }
+            $row .= "<tr class=\"article-class-$row_class_group\">";
+            $row .= "<div>$row_title</div><div>$row_desc</div><div>$row_author</div><div>$row_class_desc</div><div>$row_class_group</div><div>$row_journal</div><div>$row_page_start</div>";
+            $row .= '</tr>';
+        }
+        $html .= $row . "
+        </div>";
+        
+        fclose($handle);
+    }
+		
+    $html = '<div class="article-select-container">
+		<label for="boat-class-select">Choose Boat Class:</label>
+		<select name="boat-class-select" id="boat-class-select" >' .
+		$selectOptions	.	'
+		</select>
+	</div>
+    ' . $html .
+    '
+    <style>
+        .tech-articles-container {
+            display:grid;
+            grid-template-columns: 2em 2em 10fr 2fr 2fr 2fr 2fr;
+            max-width: 600px;
+        }
+
+
+    </style>
+
+    <script>
+    jQuery(document).ready(function($) {
+		
+		///////////////////////////////////////////////
+		// SELECT JQUERY  CHANGE DETECT
+        $("#boat-class-select").change(function() {
+            
+            var selectedClassName = "article-class-" + $(this).find(":selected").val() ;
+
+            var allWanted = false;
+            var options = $("#boat-class-select option");
+			for (i = 0; i < options.length; ++i) {
+				if ( options[i]. value == "all" && options[i].selected )
+				allWanted = true;
+				break;
+			}
+			var i;
+			for (i = 0; i < options.length; ++i) {
+				
+				var targetContainerClass = ".article-class-" + options[i].value ;
+				
+                if ( options[i].selected  || allWanted  ) {
+					$( targetContainerClass ).css("display","block");
+				} else {
+					$( targetContainerClass ).css("display","none");
+				}
+			}	
+
+        });    
+
+    });
+    </script>';
+
+	return $html;
+}
+
+/********************************************************
+ * Supports a new Post Type for Tech Articles, pre loaded from three 250+ in early s/sheet
+ * Note that the s/sheet has a summary and excerpt and a pointed to a PDF file on disk. 
+ * Include functions that
+ * 1. Function to create new Post-Type="tech-article"
+ * 2. Function to List posts of this type
+ * 3. Function to create new posts of this type from db table entry (created from s/sheet) 
+ ********************************************************/
+
+
+/***********************
+ * LIST TECH-ARTICLES SHORTCODE - shortcode that displays a list of All post types. Includes a header with a page count and page selector,
+ * also a selection box for selecting alternative categories of post_types.
+ * This shortcode produces the entire Page contents, so just embed [ebsoc-list-items post_type="..." ]
+ * in the page contents. Can ebe used with any template page, eg with or witout a sidebar
+ * The accompanying CSS reformats the output to look good on desktop or mobile phone devices
+ *
+ **********************/
+add_shortcode( 'moa-list-tech-articles', 'moa_list_tech_articles' );
+/**
+ * Callback for the display-posts shortcode.
+ * @param array $atts Shortcode attributes, see below for attributes and their defaults
+ * @return string
+ */
+function moa_list_tech_articles( $atts ) {
+    
+    global $wp;
+    
+    ////////////////////////////////////////////////
+    // SET UP Query Args for the Wp_Query() loop and do the loop
+    ////////////////////////////////////////////////
+    $atts = shortcode_atts(
+        array(
+            'offset'                => 0,
+            'post_status'           => 'publish',
+            'post_type'             => 'tech-article',
+            'posts_per_page'        => 20,
+            'paged'                 => 1,
+            // next args needed to define an non default listing order, 
+            'order'                 => 'ASC',       // ASC or DESC
+            'meta_key'              => 'index',     // the meta field to use, NB item skipped if field not present 
+            'meta_type'             => 'NUMERIC',   // one of  'NUMERIC', 'BINARY', 'CHAR', 'DATE', 'DATETIME', 'DECIMAL', 'SIGNED', 'TIME', 'UNSIGNED'
+            'orderby'               => 'meta_value_num', // tells WP to not only query posts with my_meta_key, but to order numerically by that key
+        ),
+        $atts
+     );
+    
+    // MAIN POST QUERY & LOOP THRU RESULTS
+    ////////////////////////////////////////////////
+    $results = new WP_Query( $atts );
+    if ( ! $results->have_posts() ) {
+        return "No Items of this type";
+    }
+    
+    $inner = '<div id="listing-main" class="listing-main grid">';
+    
+    while ( $results->have_posts() ) :
+    
+        $results->the_post();
+        global $post;
+        
+        /////////////////////
+        // GET POST DATA
+        $image=''; $title= ''; $excerpt=''; $content =''; $user_edit = '';
+        
+        $post_type_obj      = get_post_type_object( $post->post_type );
+        $post_type_singular = $post_type_obj ->labels->singular_name;       // Posts' Singular name
+        $post_type_label    = $post_type_obj ->label;                       // Post's Plural name
+        
+        ////////////////////
+        // POST TYPE - get this from the page's query string, don't display unless its all Types, if displaye it's added to start of title div
+        $post_type = ( $atts['post_type'][0] === 'all-types') ? '<div class="post-type">' . $post_type_singular . '</div>': '';
+        
+        
+        /////////////
+        // POST TITLE - add the post_type to title if posttype query = "all types"
+        // Also add the index meta data to title, (current
+        $index = ( $x = get_post_meta($post->ID,'index',true) ) ? $x . ". " : '';
+        $title_and_index = $index . $post->post_title ;
+        $title =
+        '<div class="title" title="' . $post->post_title . '">'.
+        $post_type .
+        
+        '<a href="' . $post->guid . '">' . $title_and_index . '</a>' .
+        $index .         // reference link to historic england refernce
+        '</div>';
+        
+        /////////////
+        // POST IMAGE - get the image thumbnail
+        $image = '<div class="image">' ;
+        if ( has_post_thumbnail() ) {
+            //$image = BuildFancyboxImages( $post, "feature" )
+            
+            /*  <a class="fancybox" href="' . $src . '" data-fancybox="gallery" data-options="\'closeBtn\':true" data-caption="'. $caption . '">
+             <img class="ebsoc-attachment-image" src="' . $src . '" alt="'.$caption.'" title="Click to popup Gallery View" style="cursor:pointer;"></a>
+             <div class="ebsoc-attachment-caption">' . $caption .'</div>
+             </div>'; */
+            $src =   get_the_post_thumbnail_url( $post->ID, "full");
+            $thumb = get_the_post_thumbnail_url( $post->ID, array(150,150) );       //get_the_post_thumbnail( get_the_ID(), array(100,100) )
+            
+            // this is the image for FancyBox Gallery
+            // $image .= '<a class="fancybox" data-fancybox="gallery" data-caption="'. $title_and_index . '" href="' . $src . '">
+            //    <img class="ebsoc-attachment-image" src="' . $thumb . '"></a> ';
+            // this is the image for Linking to the Item
+            $image .= '<a href="' . $post->guid . '">
+                    <img class="ebsoc-attachment-image" src="' . $thumb . '"></a> ';
+        } else {
+            $image .= '<a href="' . get_permalink() . '"><img src="/images/no-image.png" style="width:150px;height:auto;"></a> ';
+        }
+        $image .= '</div>';       // NB, listed building grade maybe empty
+        
+        /////////////
+        // POST SUMMARY - note we need at least a &nbsp; as a placeholder in the output listing
+        $summary =
+        ( $summary_1 = get_post_meta($post->ID,'summary',true) )
+        ? '<span class="summary">' . $summary_1 . '</span>'
+            : '<span class="summary">&nbsp;</span>';
+           
+            
+        /////////////
+        // EXCERPT
+        if ( has_excerpt() ) {
+            // $excerpt = ' <span class="excerpt">' . strip_tags( $post->post_excerpt ). '</span>';
+            $excerpt = ' <div class="excerpt">' . ( $post->post_excerpt ). '</div>';
+        }
+        
+        //////////////
+        // USER HAS EDITOR RIGHTS? - if so show edit options, note different handling for mobile
+        if ( current_user_can( 'edit_posts' ) ) {
+            
+            $open_in_tab = ( wp_is_mobile() ) ?  '' : ' target = "_bookmark"';
+            $disable_pending_edit   = wpuf_get_option( 'disable_pending_edit', 'wpuf_dashboard', 'on' );
+            $wpuf_edit_page         = (int) wpuf_get_option( 'edit_page_id', 'wpuf_frontend_posting' );
+            $post_id                = $post->ID;
+            
+            $wpuf_edit_url          = add_query_arg( array('pid' => $post->ID), get_permalink( $wpuf_edit_page ) );
+            $wpuf_del_url           = add_query_arg( array('action' => 'del', 'pid' => $post->ID) , site_url() . '/posts/post-user/');
+            
+            /// BUILD THE EDIT/DELETE/ADD OUTPUT BLOCK
+            $user_edit_info = "Modified Date: " . get_the_modified_date( 'Y/m/d g:i A', $post) . ", Author: " . get_the_modified_author_by_post( $post)  ;
+            $user_edit = '<div class="edit-item" title="'. $user_edit_info .'">';
+            
+            $user_edit .=
+            '<a href="' . wp_nonce_url( $wpuf_edit_url, 'wpuf_edit' ) . '" '. $open_in_tab . '>' .
+            '<i class="edit-img fa fa-pencil" title="Edit Item: '. $post->ID .'"></i></a>';
+            
+            $user_edit .=
+            '<a href="' . wp_nonce_url( $wpuf_del_url , 'wpuf_del' ) .
+            '" onclick="return confirm(\'Are you sure you want to delete this?\');">' .
+            '<i class="edit-img fa fa-trash" title="Delete Item: ' . $post->ID. '"></i></a>';
+            
+            // the post type for this item is $post->post_type, use this to get the wpuf_form_id associated with this type
+            if ( $new_post_form = get_page_by_path( $post->post_type, OBJECT, 'wpuf_forms' ) ) {
+                $user_edit .=
+                '<a href="/post-new/?wpuf_formid='. $new_post_form->ID. '" title="New Item using form: ' .$new_post_form->ID . '" class="wpuf-submit-button" type="button">
+            <i class="edit-img fas fa-plus-circle" title="New Item of this Type"></i></a>';
+            }
+            
+            $user_edit .= '</div>';
+            
+        }   // ------ end of if current user can edit -------
+        
+        ////////////////////
+        // BUILD OUTPUT POST - All components of the post display now built, so this post to the cumulative listing output
+        $inner .=
+        '<div class="listing-item">' .
+        $image .
+        //   $post_type .
+        $title .
+        $summary .
+        $excerpt .
+        item_view_buttons( $post->ID ) .   // Build a pair of buttons with links to Page View and Map View of Item
+        $user_edit .
+        '</div>';
+            
+    endwhile;
+        
+        wp_reset_postdata();
+        
+        $inner .= '</div>';
+        
+        // produce a pagination link block if posts require multiple pages
+        $page_links = '';
+        if ( $results->max_num_pages > 1) {
+            $page_links = '<div class="wpuf-pagination">Page: ' .
+                paginate_links( array(
+                    'base'      => add_query_arg( 'paged', '%#%' ),
+                    'format'    => '',
+                    'total'     => $results->max_num_pages,
+                    'current'   => $atts['paged'],
+                    'prev_text' => '&laquo;',
+                    'next_text' => '&raquo;',
+                    'add_args'  => false,
+                    
+                )) .
+                '</div>';
+        }
+        
+        // GRID/LIST BUTTONS - Build buttons to switch between listing and grid view, no longer used, default is
+        // GRID view which is set in the "<div class="listing-item grid">.. definition
+        $viewModeBtn =  '
+    <button type="button" id="viewListBtn"><i class="fas fa-list" style="font-size:16px;color=#4A5154;"></i> List View</button>
+    <button type="button" id="viewGridBtn"><i class="fas fa-th"   style="font-size:16px;color=#4A5154;" ></i> Grid View</button>
+    <script>
+    jQuery("#viewGridBtn").click(function(e) {
+       jQuery("#listing-main").addClass("grid");
+    });
+    jQuery("#viewListBtn").click(function(e) {
+        jQuery("#listing-main").removeClass("grid");
+    });
+    </script>';
+        
+        /////////////////
+        // IVORY SEARCH BOX
+        switch (  $atts['post_type'][0] ) {
+            case 'listed-building':     $srchFormId = "3023"  ;break;
+            case 'constable-painting':  $srchFormId = "2947"  ;break;
+            case 'local-story':         $srchFormId = "3024"  ;break;
+            case 'local-facility':      $srchFormId = "3025"  ;break;
+            case 'sensitive-area':      $srchFormId = "3026"  ;break;
+            case 'archaeological-site': $srchFormId = "3027"  ;break;
+            default:                    $srchFormId = "3021"  ;break;   // search form for all-types
+        }
+        
+        $ivorySearch = '
+    <span class="moa-menu-search astm-search-menu is-menu is-dropdown menu-item">
+	   <a href="" aria-label="Search Icon Link">
+            <svg width="20" height="20" class="search-icon" role="img" viewBox="2 9 20 5" focusable="false" aria-label="Search">
+		       <path class="search-icon-path" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+            </svg></a>' .
+            do_shortcode('[ivory-search id="'. $srchFormId.'" title="search-' . $post_type .  '"]') .
+            '   <div class="search-close"></div>
+    </span>';
+            
+            /////////////////
+            // POST TYPE SELECTOR POPDOWN post type selector
+            $header =
+            '<div id="listing-header" class="listing-header">' .
+            // Post Code selector popdown not wanted anymore, instead just put in the item count
+            // '   <div class="select">' . moa_list_items_select_post_type( 'display-posts', wp_get_current_user()->roles , $atts['post_type'][0]) . '</div>' .
+            '   <div class="count">' . 'Items:' . $results->found_posts . '</div>' .
+            // $viewModeBtn .       // List/Grid View Mode selector not wanted anymore
+            // $ivorySearch .       // turn off for now, input box comes up in wrong posn in iPhone view, need to fix the CSS
+            $page_links  .
+            '</div>';
+            
+            $footer = '';           // we don't want a footer anymore
+            //$footer = '<div class="listing-footer">' . $page_links  . '</div>';
+            
+            return
+            $header .
+            '<div id="listing-container" class="listing-container">' .
+            '<div class="listing-header-underlay">&nbsp;</div>' .
+            $inner .
+            $footer .
+            '</div>';
+            
+} /* End of moa-list-items shortcode */
+
+/****************
+ *  ITEM - LIST OR MAP VIEW BUTTONS - Function to produce the HTML for a couple of "<...>" tags which allow the Topics, (ie post_types)
+ *  to be viewed either as a List Item or Map Item on the Overlay Map (with the post_types pre-selected).
+ *  Called from the List-Items page in respective shortcode.
+ ***************/
+function item_view_buttons( $post_id ){
+    $x = '
+        <a class="map-btn" title="Map View"  href="/map-with-overlay/?pu=' . $post_id  . '">Map</a>
+        <a class="map-btn map-list" title="List View" href="/?p=' . $post_id . '">List</a>
+        ';
+    return $x;
+};
+
+
+/********
+ * The MySQL code to import the tech artciles from file into a table, from which we will create the posts 
+ * MariaDb Code to load up Tab delimited text file of Tech Articles
+-- create table
+DROP TABLE moa_tech_articles;
+CREATE TABLE moa_tech_articles (
+    id INT NOT NULL AUTO_INCREMENT,
+    link INT,
+    title VARCHAR(255) NOT NULL,
+    summary VARCHAR(1024),
+    author VARCHAR(255),
+    season VARCHAR(255),
+    journal_year VARCHAR(255),
+    journal_page int,
+    page_cnt VARCHAR(10),
+    boat_type VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+-- load data from file
+LOAD DATA INFILE 'H:/Research - Unix & WordPress/Macwester Live (Feb 2019)/Site Content/Technical Articles/MOA Tech Library List (tab delimited).txt'
+    INTO TABLE moa_tech_articles
+    FIELDS TERMINATED BY '\t'
+    LINES STARTING BY '\n' 
+    TERMINATED BY '\r'
+    IGNORE 1 LINES;
+-- TEST
+select * from moa_tech_articles;
+***********/
+
+/**********************
+ * IMPORT TECH ARTICLES from TABLE INTO NEW POST TYPE
+ * Add this shortcode to a page and extecute it to 
+ * Based on EBSOC IMPORT LISTED BUILDINGS (see ebsoc-import-export.php)
+ **********************/
+add_shortcode( 'moa-import-tech-articles', 'moa_import_tech_articles_fn' );
+function moa_import_tech_articles_fn( $atts , $content) {
+   
+    $cntUpdated = 0;                 // how many records updated
+    $cntAdded   = 0;                 // how many records added
+    
+    global $wpdb;
+    $qry = 'SELECT * FROM moa_tech_articles' ;
+    $results = $wpdb->get_results( $qry );
+    
+    // build the WP query on the post DB
+    $args = array(
+        'post_type' => 'tech-article',
+        'post_status' => 'publish',
+        'posts_per_page' => - 1, // otherwise query returns no of pages set in Settings >> Reading >> Blog pages show at most.
+        'orderby' => 'ID'
+    );
+    $query = new WP_Query($args);
+    $posts = $query->posts;     // array of posts returned from the query
+    
+    // loop thru each row of the table
+    foreach ($results as $row) {
+        
+        $found=false;
+        
+        foreach ($posts as $post) {
+            $post_index = get_post_meta($post->ID, 'index')[0];                      // this will be key
+            $post_id = $post->ID;
+            $pdf_filename = "tech-article-" . str_pad( $row.link, 3, "0") . ".pdf" ;
+            
+            if ( $row->link == $post_index ) {
+                
+                $data = array();
+                $data['ID'] = $post_id;
+                $data['post_title'] =  $row->title ;
+                $data['post_name']  =  $row->title ;
+                $data['post_contents']  =  $pdf_filename;
+                
+                wp_update_post( $data );
+                
+                $found = true;
+                $cntUpdated++;
+                echo "<br>Update " . $cntUpdated ." - Updating Index:" . $post_index . " - Updating ID:" . $post_id .", Title: " .$row->title;
+                break;
+                
+            }
+        }
+        if ( !$found ) {
+            /////////////
+            // INSERT NEW ITEM
+            $data = array(
+                'post_type'     => 'tech-article',
+                'post_status'   => 'publish',
+                'post_excerpt'  => $row->summary,
+                'post_title'    => $row->title ,
+                'post_name'     => $row->title,
+                'post_content'  => $pdf_filename,
+            );
+            $post_id = wp_insert_post( $data );
+            
+            $cntAdded++;
+            echo "<br>Adding" . $cntAdded ." - Added ID:" . $post_id .", Title: " .$row->title;
+            
+        }
+        ///////////////////////
+        // Update the meta data
+        update_post_meta( $post_id, 'index', ($row->indexno) );
+        update_post_meta( $post_id, 'size', $row->size);
+        update_post_meta( $post_id, 'collection', esc_html( $row->collection ));
+        update_post_meta( $post_id, 'date', $row->date);
+        update_post_meta( $post_id, 'medium', $row->medium);
+        update_post_meta( $post_id, 'significance', ($row->significance));
+        update_post_meta( $post_id, 'area', $area);
+        update_post_meta( $post_id, '_wpuf_form_id', "254");
+        
+        $x = ($row->medium)     ? $row->medium . ", " : '';
+        $x .=($row->date)       ? $row->date. ", " : '';
+        $x .=($row->size)       ? $row->size . ", " : '';
+        $x .=($row->collection) ? $row->collection  : '';
+        update_post_meta( $post_id, 'summary', $x);
+        
+        
+    }
+    
+    echo "<br>Updated : " . $cntUpdated;
+    echo "<br>Added: " . $cntAdded;
+    echo "<br>Total: " . ($cntUpdated + $cntAdded);
+    
+}
+
+
+
+

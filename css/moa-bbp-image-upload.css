@@ -1,0 +1,411 @@
+/**
+ * Author: Potent Plugins
+ * License: GNU General Public License version 2 or later
+ * License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+ */
+
+/* Following code used to hide the caption field - disabled because no longer needed */
+/*
+body.bbpress .mce-panel[aria-label="Insert/edit image"] .mce-form > .mce-container-body > .mce-last,
+body.buddypress.forum .mce-panel[aria-label="Insert/edit image"] .mce-form > .mce-container-body > .mce-last {
+	display: none;
+}
+*/
+
+#hm_bbpui_file_frame {
+	width: 1px;
+	height: 1px;
+	border: 0;
+}
+
+/*********************************************
+** MOA Additions start here
+** bbPRESS FORUM and 
+** bbPRESS DROP LOADER PLUGIN
+*********************************************/
+
+/***************
+*FORUM Page 
+***************/
+/* bbPress Breadcrumb Trail*/
+#bbpress-forums .bbp-breadcrumb{
+    max-width: min( 800px , calc( 100vw - 180px) );
+    font-size: 1em;
+    line-height:1.7em;
+    background-color: #CEE9FB;
+    margin-bottom:5px;
+    padding: 0px 10px;
+}
+#bbpress-forums .bbp-breadcrumb p {
+    font-size: .8rem!important;
+    margin-bottom: 0px!important;
+}
+/*
+#bbpress-forums .bbp-breadcrumb a {
+    color: white;
+}
+*/
+
+/* bbPress Forums List - Search Text Box */
+#bbpress-forums #bbp-search-form input[type=text] {
+    border: 1px solid #9e9f9f;;
+    height: 27px;
+    line-height: 22px; 
+    margin-right: 10px;
+    margin-top: 10px;
+}
+/* bbPress Search Button */
+#bbpress-forums #bbp-search-form input[type=submit] {
+    text-indent: 0;
+    background: none;
+    background-color: #3F51B5;
+    color: #fff;
+    width: auto;
+    height: 30px;
+    border-radius: 0;
+    margin-top: 0;
+    line-height: 0px;
+}
+/* bbPress Forums List container box*/
+#bbpress-forums .bbp-forums {
+    border:none!important;
+}
+/* bbPress Forums List header */
+#bbpress-forums .bbp-header, #bbpress-forums .bbp-footer {
+    border-radius: 10px;
+    border:none!important;
+    font-size: larger;
+}
+/* bbPress Forums List Item (summary of the Forum) */
+#bbpress-forums .bbp-body .forum {
+    border-radius: 10px;
+    margin:5px 0px;
+    border:none!important;
+    font-size: larger;
+}
+
+/***************
+* TOPIC page (e.g.: page = /forumsforum/all-about-yachts)
+* <div id="bbpress-forums" class="pbbpress-wrapper"> is container for whole block 
+* <div class="bbp-topics"> is container for list of topics
+***************/
+#bbpress-forums.bbpress-wrapper {
+    top:-25px;
+}
+/* Forum Topic List -  container for all Topics */
+#bbpress-forums ul.bbp-forums, 
+#bbpress-forums ul.bbp-lead-topic,
+#bbpress-forums ul.bbp-replies,
+#bbpress-forums ul.bbp-search-results, 
+#bbpress-forums ul.bbp-topics {
+    border: none!important;
+}
+#bbpress-forums div.bbp-topic-tags {
+    float: unset;       /* default floats this to the right, under "Favourites | Subscribe" but this interfeers with popup "REply to" button */
+    clear: both;
+}
+/* Forum Topic (List of replies) - over container for the List of topics*/
+.bbp-topics .topic {
+    margin: 5px 0px!important;
+    border-radius: 10px;
+    padding: 10px!important;
+}
+/* Forum Topic List - header before list of topics*/
+.bbp-template-notice.info {
+    border-radius: 5px;
+    background:none!important;
+    border:none!important;
+    max-width: calc( 100vw - 150px);    /* give room on the right for popup "Reply to" button */
+}
+/* Forum Topic List - first top shows with yello background - remove this*/
+.bbp-forum-content ul.sticky, .bbp-topics ul.sticky, .bbp-topics ul.super-sticky, .bbp-topics-front ul.super-sticky {
+    background-color: white!important;
+}
+/* Forum Topic List - Topic title */
+.bbp-topic-title {
+    font-size: 1.2em!important;
+}
+/* Topic Topic List - Header with topic, voices, last post etc. - format this to be plained*/
+.bbp-topics li.bbp-header{
+    font-size: 1em!important;
+    background:none!important;
+    border-radius:0px!important;
+}
+/* Topic Topic List - also appears in footer, we don;t ned this*/
+.bbp-topics li.bbp-footer{
+    display:none;
+}
+
+#bbpress-forums div.bbp-forum-author .bbp-author-name, 
+#bbpress-forums div.bbp-reply-author .bbp-author-name, 
+#bbpress-forums div.bbp-topic-author .bbp-author-name {
+    margin: 0 0px;
+    font:1.2em;
+}
+/* makes the avatar img icon bigger, the default is 14 x 14px   which is too small to see the author*/
+#bbpress-forums p.bbp-topic-meta img.avatar, 
+#bbpress-forums ul.bbp-reply-revision-log img.avatar, 
+#bbpress-forums ul.bbp-topic-revision-log img.avatar, 
+#bbpress-forums div.bbp-template-notice img.avatar, 
+#bbpress-forums .widget_display_topics img.avatar, 
+#bbpress-forums .widget_display_replies img.avatar {
+    float: none;
+    width: 48px;
+    border-radius: 50%;
+    height: auto;
+    max-height: 48px;
+    max-width: 48px;
+    margin-bottom: -7px;
+    border: 3px double #ddd;
+}  
+/****************
+ * ITEMS TO HIDE 
+ ***************/
+/* HIDE - IP address showing under the respondents name  -  waste of space */
+#bbpress-forums .bbp-reply-ip {
+    display:none;
+}
+/* HIDE -  "Reply To Reply" in each Reply header, this fires an <a ref...> to the  Reply block at the end of the page, but we've hidden 
+    this in preference for the popup reply. We need to find a way to vector the "Reply to Reply" to this popup. TODO */
+#bbpress-forums .bbp-reply-to-link{
+    display:none;
+}
+/***************
+* TOPIC - CHANGE DISPLAY from Tablet Portrait and smaller
+***************/
+@media screen and (max-width: 768px) {
+     #bbpress-forums .bbp-breadcrumb{
+        max-width: calc( 100 vw - 150px);
+        font-size: .7em;
+    }
+    #bbpress-forums p.bbp-topic-meta img.avatar, 
+    #bbpress-forums ul.bbp-reply-revision-log img.avatar, 
+    #bbpress-forums ul.bbp-topic-revision-log img.avatar, 
+    #bbpress-forums div.bbp-template-notice img.avatar, 
+    #bbpress-forums .widget_display_topics img.avatar, 
+    #bbpress-forums .widget_display_replies img.avatar {
+        width: 32px;
+        margin: 0px 8px;
+        display:none;
+     }
+    #bbpress-forums .bbp-topic-freshness  a{
+        white-space: nowrap;
+    }
+    /* move freshness author avatar to the right */
+    #bbpress-forums p.bbp-topic-meta .bbp-topic-freshness-author img.avatar{
+        float:right
+    }
+    /* Freshness author name is on the right, correct for clipping when on mobile phone */
+    .bbp-topic-freshness-author .bbp-author-link span.bbp-author-name{
+        /*word-wrap: break-word;*/
+        white-space:break-spaces!important;
+   }
+}
+/*************************
+* FORUM TOPIC ITEM - formats an Indivitual topic and its replies, (e.g. page = .../forums/topic/macwester-27-2/)
+* <div id="bbpress-forums" class="pbbpress-wrapper"> is container for whole block 
+* <div class="forum bbp-replies"> is the cnmtainer for the list of topic & replies
+**************************/
+.bbp-replies .topic,
+.bbp-replies .reply {
+    margin: 0px 0px!important;
+    border-radius: 0px 0px 10px 10px;
+    padding: 6px!important;
+}
+/* Forum Topic Item -  indent the replies and their headers, but not the topic header */
+.bbp-replies .reply, 
+.bbp-replies .bbp-reply-header:not(:first-child) {
+    margin-left: 20px!important;
+    width: calc(100% - 20px)!important;
+}
+.bbp-replies .bbp-reply-header {
+    margin: 5px 0px 0px!important;
+    border-radius: 10px 10px 0px 0px;
+    padding: 6px!important;
+    background-color: #cee9fb!important;
+}
+/* First line of topic and reply =  slightly smaller font*/
+.bbp-replies .bbp-reply-content p:first-child {
+    font-size: .9rem!important;
+}
+/* Topic Item - topic tags, font too big, so shrink*/
+#bbpress-forums .bbp-topic-tags p {
+    font-size: .8rem!important;
+}
+/* Topic Item - the pagination bar, skip margins above & below*/
+.bbp-pagination {
+    margin: 0px;
+}
+/* Topic Item - "Author Post" useless header when listing individual topic so hide it*/
+.bbp-replies li.bbp-header, 
+.bbp-replies li.bbp-footer {
+    display:none;
+}
+/* Topic Item - the "REPLY <reply-no>" link at reply top right , move slightly to left "*/
+.bbp-replies .bbp-reply-permalink{
+    margin-right: 20px;
+}
+/* Topic & REply Items - container for author avatar & details, margin:10px set by bbpress css, wastes space & not needed */
+#bbpress-forums .bbp-body div.bbp-reply-author, #bbpress-forums .bbp-body div.bbp-topic-author {
+   margin:0px;
+}
+/* Topic Item - the avatar, make it a circle*/
+.bbp-replies .bbp-author-avatar img{
+    border-radius: 50%;
+}
+
+/******************
+* BUTTONS - bbPress New Topic and Reply Submit button (assuming New form in MOA Popup wind0w)
+******************/
+/* New Topic & New Reply Submit Buttons  - format tthese o look like default OnePressMenu Submit button */
+#bbp_topic_submit, #bbp_reply_submit {
+    color: white;
+    background: var(--moa-btn-color);
+    border: none;
+    padding: 5px 20px;
+    position: relative;
+    bottom: -90px;
+    float:right;
+}
+/******************
+/* MOA Popup Launch Button 
+* bbPress New Topic and Reply Submit button
+******************/
+/* New Topic & New Reply Submit Buttons  - format tthese o look like default OnePressMenu Submit button */
+#moa-popup-window-btn {
+    color: white;
+    background: var(--moa-btn-color);
+    border: none;
+    padding: 5px 20px;
+    position: absolute; /* positions this relative to its container (#bbpress-forums or #comnments) which must have position=relative set on it */
+    right: 10px;
+    top: 25px;
+}
+  
+/* stretch topic title across full width of box*/
+.moa-popup-window .bbp-topic-title{
+width:100%;
+}
+
+.moa-popup-window legend {
+margin-bottom: 0px;
+font-size: 14px;
+}
+/*  Admin Info - displays a note "you have full HTML rights..." - unnecessary so hide */
+.moa-popup-window .bbp-template-notice{
+display:none;
+}
+
+/* the container for Topic List - must have positino=relative so we can set 
+position=absolute on Create New Topic button*/
+#bbpress-forums {
+    position: relative; 
+}
+ 
+#bbpress-forums div.bbp-the-content-wrapper input {
+    font-size: 10px;
+    padding: 5px;
+    margin: 0 2px 0 0;
+    line-height: 1em;
+}
+
+/* bbPress text in popdown boxes -  default size is 16px and too big, this looks bbetter */
+#bbpress-forums fieldset.bbp-form p, 
+#bbpress-forums fieldset.bbp-form textarea, 
+#bbpress-forums fieldset.bbp-form select, 
+#bbpress-forums fieldset.bbp-form input {
+    margin: 0 0 8px;
+    font-size: 12px;
+}
+/* The title "Reply to etc. " at the top of the Reply input form,  need to correct form  font size and marginpicked up from bootstrap css file */
+#bbpress-forums fieldset.bbp-form legend {
+    margin-bottom: 0px;
+    font-size: 1rem;
+    border: 1px solid white;
+}
+/* Footer icons - this style ensures the text and the icons are vertically aligned in the centre of the block*/
+.site-footer .site-info{
+    display: inline-block;
+    padding: 10px 10px;
+ }
+#textheading {
+    vertical-align: middle;
+    display: inline-flex;
+}
+/* Move Button on topic reply up a bit*/
+.bbp-submit-wrapper {
+	position: relative;
+	top: -90px;
+     float:right!important;
+}
+/***************************
+** TINYMCE EDITOR WINDOW
+** Set of CSS commands will make the TinyMce editor popup windows responsive, Copied verbatum from 2nd answer in 
+** https://stackoverflow.com/questions/19735352/how-to-make-tinymces-modal-dialogs-responsive 
+** Essential to make the Image Insert popup usable on a mobile phone
+** note everything has to be !important to override TinyMce habit of setting styles in the HTML
+***************************/
+@media screen and (max-width: 480px) {		/* kicks in for standard mobile phone in portrait mode */
+	.mce-window                         {width:auto !important; top:200px !important; left:0px !important; right:0px !important; bottom:0px !important; background:none !important;}
+	.mce-window-head                    {background:#FFFFFF !important;}
+	.mce-window-body                    {background:#FFFFFF !important;}
+	.mce-foot > .mce-container-body     {padding:10px !important; width:80% !important;}
+	.mce-panel                          {max-width:100% !important;}
+	.mce-container                      {max-width:100% !important; height:auto !important; overflow:auto;}
+	.mce-container-body                 {max-width:100% !important; width: auto !important; height:auto !important; overflow:auto;}
+	.mce-form                           {padding:10px !important;}
+	.mce-tabs                           {max-width:100% !important;}
+	.mce-formitem                       {margin:10px 0 !important;}
+	.mce-abs-layout-item                {position:relative !important; left: 0 !important; top: 0 !important; width:auto !important;}
+	.mce-slider                         {margin-top: 20px !important; margin-bottom: 20px !important;}
+	.mce-abs-layout-item.mce-label, .mce-label      {display:block !important; font-size:12px!important;}
+	.mce-abs-layout-item.mce-textbox    {-webkit-box-sizing:border-box !important; -moz-box-sizing:border-box !important; box-sizing:border-box !important; display:block !important; width:100% !important;}
+	.mce-abs-layout-item.mce-combobox   {display:flex !important;}
+	.mce-abs-layout-item.mce-combobox > .mce-textbox {-ms-flex:1 1 auto; -webkit-flex:1 1 auto; flex:1 1 auto; height:29px !important; width:80% !important;}
+	.mce-container-body.mce-window-body.mce-abs-layout iframe {height:500px !important;} /*this only use with responsive file manager 9*/
+	.mce-tinymce-inline                  {left: 0 !important; right: 0 !important; margin-left: auto !important; margin-right: auto !important;}
+	.mce-tinymce-inline .mce-flow-layout {white-space: normal !important;}
+	.mce-menu.mce-fixed                  {max-height: 90%; overflow: auto;}
+	.mce-title                           {white-space:normal !important;}
+	.mce-btn-group                       {overflow-y: hidden !important;}
+ }
+/* End of CSS commands to make TinyMce editor popup windows responsive */
+
+/*********************************************
+** BBPRESS DROP LOADER PLUGIN
+*********************************************/
+/* Drop Loader Container - resize it for mobile phone portrait mode */
+@media screen and (max-width: 375px) {	/* kicks in for standard mobile phone in portrait mode */
+    .drop_uploader.drop_zone{
+	width: 80vw!important;
+    }
+}
+
+#bbpress-forums .drop_uploader.drop_zone .text {
+    font-family: 'Open Sans'!important;
+	font-size: 16px!important;
+	line-height: 1.1em!important;
+}
+
+.thickbox-loading {
+	height: auto!important;
+    margin: 0 auto!important;
+    padding: 10px!important;
+    width: 90%!important;
+    left: 5%!important;
+    height: auto!important;
+    top: 5%!important;
+    
+}
+#TB_Image {
+	max-width: 100%!important;
+    height: auto!important;
+    width: 100%!important;
+    left: 0px!important;
+    position: relative!important;
+	margin: 0px 0 0 0px!important;
+}
+#TB_closeWindowButton {
+	top:0!important;
+	background:white!important;
+}

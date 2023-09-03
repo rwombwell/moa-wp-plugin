@@ -1,0 +1,203 @@
+
+/*********************************************************
+* LRM AJAX LOGIN and REGISTRATION POPUP PLUGIN
+* Styles for Login and Registration Form, based on "AJAX Login and registration Modal Popup" and 
+*  "AccessPress Social Login" (called aspl) which provides the Google anfd Facebook Social Media login 
+ ********************************************************/
+
+/* This is necessary to move the "Terms and Conditions" checkbox down a bit, default margin-top ia 1.2em */
+.lrm-form .fieldset--terms{
+	margin-top:6em!important;
+}
+ /* irritatingly the APSL social login buttons are stuffed in before the LRM Login button,  better if they were after this this,
+ but note needs different changes for Login and Registration Forms */
+.lrm-integrations--login .apsl-login-networks{ /* this selector moves it the right amount for the login form */
+    position:absolute;
+    top:300px;
+    margin: 0 4em;
+    margin: 0px 10%;
+    width: 80%;
+}
+ .lrm-integrations--register .apsl-login-networks{ /* this selector moves it the right amount for the login form */
+    position: absolute;
+    top: 663px;
+    margin: 0 25%;
+    width: 50%;
+ }
+ 
+ /* Re-size the LRM login backround panel, again needs different sizes for Login and Registration Forms. Problem here is is the  panel is a parent
+ div that surrounds the Login and Re froms, so we need the CSS ":has()" function to create a selector that includes the child element */
+ .lrm-user-modal-container-inner:has(.lrm-signin-section.is-selected) { /* This is the panel that surrounds the login form*/ 
+    height: 400px;
+}
+.lrm-user-modal-container-inner:has(.lrm-signup-section.is-selected) { /* This is the panel that surrounds the registration  form*/ 
+    height: 800px;
+}
+/* Style the "or login seamlessly ..." text, appears in both login and registration forms*/
+.span.apsl-login-new-text {
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+    line-height: 17px;
+    margin: 10px 0px;
+}
+.lrm-form .fieldset {
+    position: relative;
+    margin: 10px 0;
+    clear: both;
+}
+.lrm-form .fieldset--boatfields{
+    position: relative;
+    margin: 5px 0;
+    clear: both;
+}
+.lrm-form .lrm-col-half-width {
+    clear: unset;
+}
+/*******************************
+* REGISTRATION FORM SPECIFIC
+*******************************/
+
+/* LRM registration fields have icons embedded in them, which requires padding-left:50px to keep the text to the right.
+But new fields we add have no icons, so don;t need this padding. These fields are all in a  <div class="lrm-integrations"...>
+so we reduce the padding in that case  */
+.lrm-form .lrm-integrations input[type=text], 
+.lrm-form .lrm-integrations input[type=tel], 
+.lrm-form .lrm-integrations input[type=email], 
+.lrm-form .lrm-integrations input[type=number], 
+.lrm-form .lrm-integrations input[type=url], 
+.lrm-form .lrm-integrations input[type=date], 
+.lrm-form .lrm-integrations input[type=password], 
+.lrm-form .lrm-integrations textarea, 
+.lrm-form .lrm-integrations select {
+   font-size: 0.9rem;
+    padding: 3px 5px;
+   -webkit-appearance: listbox !important;      /* turns on a down arrow, which seems to have been disabled */
+   appearance: listbox !important;      /* turns on a down arrow, which seems to have been disabled */
+}
+/* Labels show up in the Reg Form Boat Details area we've added in - default si too big, so shrink a bit */
+.lrm-form .lrm-integrations label {
+    text-align: left;
+    display: block;
+    margin-left: 5px;
+    font-weight:500;
+    font-size:0.8rem;
+    margin-bottom: 0px;
+}
+
+.moa-register-boat-profile-container{
+    height: 220px;
+    padding: 0px 10px;
+}
+.moa-register-boat-profile-heading p{
+    margin-bottom: 0px;
+}
+/* moa-um-form-styles.css sets basic positioning on popup map button for right of field that preceeds is, 
+this resizes to suit fields in lrm-integrations div*/
+.lrm-form .lrm-integrations .moa-longlat-map-button{
+	text-align: left;
+    display: block;
+    margin-left: 5px;
+    font-weight: 500;
+    font-size: .9rem;
+    margin-bottom: 0px;
+    height: 30px!important;
+    top: 21px!important;
+}
+.lrm-form .lrm-integrations .map-div{
+    border: 3px solid white;
+    border-radius: 5px;
+}
+.lrm-form .lrm-integrations .moa-popup-close{
+    position: absolute;
+    right: 0;
+    z-index: 401;
+    width: 30px!important;
+    height: 30px;
+    font: size 16px;;
+    line-height: 8px;
+    border: none;
+    background: #595959;
+}
+.lrm-form input.has-padding, 
+.lrm-form select.has-padding, 
+.lrm-form button.has-padding {
+    padding: 6px 20px 6px 50px;
+}
+/* Container for the "Login" button, defaults to 1.4em top & bottom margins, which is too much! */
+.lrm-form .fieldset--submit {
+    margin: .4em 0!important;
+}
+.lrm-form button[type=submit] {
+    width: 50%!important;
+    margin: 0 25%;
+    height: 50px;
+    line-height: 25px;
+    border-radius: unset;
+}
+
+/* The "lost password" message, edfaults to off the popup form , we want it immediately under the "Login" button */
+p.lrm-form-bottom-message {
+    position: relative;
+    top: 0px;
+}
+/* The lost pwd message anchor defaults to white, which we can't see when we move it to the white form, so change it*/
+.lrm-user-modal p.lrm-form-bottom-message a {
+    color: #681010;
+}
+/* The reCaptcha button, by default shows before the Login button. This moves it to the end of the form */
+.lrm-grecaptcha {
+	  display:none!important;	/* insufficient room on the popup login form, so just hide the reCaptcha badge */
+    width: 256px;
+    height: 60px;
+    display: block;
+    transition: right 0.3s ease 0s;
+    position: fixed;
+    bottom: 14px;
+    right: 0px;
+    box-shadow: gray 0px 0px 5px;
+    border-radius: 2px;
+    overflow: hidden; 
+}
+
+/*************************************************************
+* LRM REGISTRATION ADDITIONAL PROFILE FIELDS POPUP WINDOW
+* Modal Popup for Additional Profile Fields
+************************/
+/* The Modal Popup Background (covers the rest of the screen) */
+.moa-lrm-profile-popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+   
+  /* The top right hand (X) Close Button */
+  .moa-lrm-profile-popup-close {
+    position: absolute;
+    z-index: 401; /* has to appear on top of Leaflet maps which appear to have a z-index of 400 */
+    top: 0px;
+    right: 5px;
+    color: #7d7b7b;
+    font-size: 2.5rem;
+    font-weight: bold;
+    line-height: 10px;
+    text-align: center;
+    background: transparent;
+    padding: 10px 5px;
+  }
+  
+  .moa-lrm-profile-popup-close:hover, .moa-lrm-profile-popup-close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+      background: var(--moa-btn-color-hilite);
+  }
+  

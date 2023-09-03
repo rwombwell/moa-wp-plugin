@@ -1,0 +1,77 @@
+
+/************************
+* Modal Popup popup 
+* Used for bbPress New Topic as a popup
+************************/
+/* The Modal Popup Background (covers the rest of the screen) */
+.moa-popup-window {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* The Modal Popup container (where the form shows) */
+.moa-popup-window-content {
+  position:relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: auto;
+  overflow-y: scroll;
+   /* background-color: rgb(0,0,0); 	Fallback color
+  background-color: rgba(0,0,0,0.4); Black w/ opacity */
+  /* css for a smooth shadow effect to the popup box */
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
+              0 2px 2px rgba(0,0,0,0.12), 
+              0 4px 4px rgba(0,0,0,0.12), 
+              0 8px 8px rgba(0,0,0,0.12),
+              0 16px 16px rgba(0,0,0,0.12);
+}
+
+/* Mobile Medium settings, (Tablet) - note, the make popup container wider */
+@media only screen and (max-width: 768px) {
+  .moa-popup-window-content { 
+    width: 98%;
+  }
+
+}
+
+/* the text message box at the top of the popup */
+  .moa-popup-msg { 
+    /* text-align: center; */
+    margin: 30px;
+    font-size: medium;
+}
+
+/* The top right hand (X) Close Button */
+.moa-popup-window-close {
+  position: absolute;
+  z-index: 401; /* has to appear on top of Leaflet maps which appear to have a z-index of 400 */
+  top: 0px;
+  right: 5px;
+  color: #7d7b7b;
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 10px;
+  text-align: center;
+  background: transparent;
+  padding: 10px 5px;
+}
+
+.moa-popup-window-close:hover, .moa-popup-window-close:focus {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+	background: var(--moa-btn-color-hilite);
+}
+

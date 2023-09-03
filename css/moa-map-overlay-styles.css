@@ -1,0 +1,862 @@
+/***********************************************************************
+*  Copyright 2021-23 Rob Wombwell, Daemon Ltd. 
+************************************************************************/
+/******************************************
+* Styles to support MOA LEAFLET OVERLAY MAPS - 
+* for STATIC  and POPUP Maps that appear in the User's Profile and Registration editing function see styles in moa-map-styles.css
+*****************************************/
+
+/* Background colours for fixed tooltip background, used in .leaflet-tooltip-mobile{} below */
+:root {
+    --tooltip-background-rowans-kelpies: rgb(185, 105, 29);
+    --tooltip-background-mac-twenties: rgb(147, 67, 194);
+    --tooltip-background-mac-thirties: rgb(46, 112, 33);
+    --tooltip-background-mac-thirtyfives: rgb(45, 91, 192);
+    --tooltip-background-others: rgb(89, 87, 97);
+    --tooltip-background-default: rgb(89, 87, 97);
+
+}
+
+/*************************************************
+* LEAFLET SIDEBAR PLUGIN - MAIN SIDEBAR  CONTAINER SETTINGS 
+**************************************************/
+.leaflet-sidebar {
+    /* container for the entire sidebar */
+    height: calc(var(--vh, 1vh) * 80);
+    /* default=100%, slightly smaller height shows the bottom edge of box */
+    max-width: 400px;
+    /*  height: auto;
+      max-height: 90%; */
+    overflow-y: auto;
+}
+
+/******************************************************************
+  * LEAFLET SIDEBAR MEDIA SETTINGS
+  * The sidebar needs to be manually resized to fit with different screen sizes
+  *******************************************************************/
+@media screen and (max-width: 425px) and (orientation: portrait) {
+
+    /* iPhone (width=375px) and iPhoneX (width=425) portrait  */
+    .leaflet-sidebar {
+        height: calc(var(--vh, 1vh) * 90);
+    }
+
+    /* entire sidebar container, default=100%, so slightly smallerto miss screen bottom  */
+    .leaflet-popup-content-container .post-menu .button {
+        font-size: 10px !important
+    }
+
+    /* used with fa edit icon to position over the image */
+    .moa-popup-gravitar {
+        bottom: -10px;
+    }
+
+    /* popup's OWNER'S profile picture, we need to shrink AND MOVE THIS SLIGHTLY SO */
+    .moa-popup-gravitar img {
+        height: 60px !important;
+        width: 60px !important;
+    }
+
+    /* make user's profile pic smaller */
+}
+
+@media screen and (max-height: 425px) and (orientation: landscape) {
+
+    /* iPhone (width=375px) and iPhoneX (width=425) landscape  */
+    .leaflet-sidebar {
+        height: calc(var(--vh, 1vh) * 90);
+    }
+
+    /* as above, but smaller overall size */
+}
+
+/* Leaflet Sidebar has this in it, */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    /* small tablet iPad Air portrait  */
+    .leaflet-sidebar {
+        width: 400px;
+    }
+
+    .leaflet-sidebar.left.visible~.leaflet-left {
+        left: 400px;
+    }
+
+    .leaflet-sidebar.right.visible~.leaflet-right {
+        right: 400px;
+    }
+}
+
+@media (max-width: 767px) {
+    .leaflet-sidebar.left.visible~.leaflet-left {
+        left: 400px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    /* big tablet or small desktop  portrait  */
+    .leaflet-sidebar.left.visible~.leaflet-left {
+        left: 400px;
+    }
+}
+
+@media screen and (max-width: 360px) and (orientation: portrait) {
+
+    /*  for Moto G4 with narrower screen  */
+    .map-tooltip-fixed {
+        font-size: 0.875rem;
+    }
+
+    .leaflet-popup-content-container .post-menu .button {
+        font-size: 12px !important;
+    }
+
+    /* used with fa edit icon to position over the image */
+}
+
+@media screen and (max-height: 360px) and (orientation: landscape) {
+    .map-tooltip-fixed {
+        font-size: 0.875rem;
+    }
+}
+
+/*************************************************
+  * LEAFLET SIDEBAR PLUGIN - POPUP CONTENT SETTINGS
+  **************************************************/
+.leaflet-sidebar>.leaflet-control {
+    height: 560px;
+    /* leaflet sidebar outer container, must set the height to an absolute value to get scrollbar to show*/
+    overflow: auto;
+    padding: unset;
+}
+
+.leaflet-sidebar .close {
+    /* leaflet sidebar close button, move slightly to right and up */
+    /*right: 0px;               /* default = 20px */
+    top: 12px;
+    /* default = 20px, top & right settings make "X" aligng with top-right corner  */
+    right: 5%;
+    /* move the "x" slightly to the left of right-hand edge */
+    font-size: 30px;
+    /* make the "x" bigger" */
+    color: black !important;
+    background: lightgray;
+    opacity: .7;
+    display: none;
+}
+
+.leaflet-sidebar .close {
+    font-size: 24px;
+    line-height: 32px;
+    vertical-align: middle;
+    color: white !important;
+    background: #656A6F;
+    opacity: 1;
+    font-weight: 500;
+    height: 36px;
+    width: 36px;
+    top: 0px;
+    margin: 10px;
+    right: 8px;
+    border-radius: 0px 0px 0px 10px;
+}
+
+/* make the sidebar slightly less than the screen width and add border plus shadow */
+.leaflet-touch .leaflet-sidebar>.leaflet-control {
+    /* border: 0; */
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    /* background:#F0F2F5!important; */
+    padding: 5px;
+}
+
+.leaflet-popup-content-container {
+    background: white;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.leaflet-popup-content-container .post-type {
+    color: maroon;
+    height: 36px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: beige;
+    line-height: 36px;
+    padding: 0 10px;
+}
+
+.leaflet-popup-content-container .post-menu {
+    color: #656770;
+    /* background: lightgray; */
+    /* margin-top: -35px; */
+    /* height: 40px; */
+    /* line-height: 40px; */
+    /* float: right; */
+    z-index: 1;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.leaflet-popup-content-container .post-menu .button {
+    /* used with fa edit icon to position over the image */
+    margin: 0px 0px 0px 1px;
+    /* border-radius: 16px; */
+    display: inline-block;
+    font-size: 16px;
+    line-height: 32px;
+    background-color: var(--moa-blue);
+    color: white;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    vertical-align: bottom;
+    float: right;
+    cursor: pointer;
+}
+
+.leaflet-popup-content-container .post-menu .button i,
+.leaflet-popup-content-container .post-menu .button a:link,
+.leaflet-popup-content-container .post-menu .button a:hover,
+.leaflet-popup-content-container .post-menu .button a:visited {
+        color: white;
+}
+
+.leaflet-popup-content-container .post-menu .button:hover {
+    background: maroon
+}
+
+.leaflet-control .div-show {
+    color: var(--ebsoc-mapbtn-color);
+    background: lightgray;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+/*.leaflet-control .div-show::after {
+      content: "\25bc";
+  }*/
+.leaflet-popup-content-container .excerpt {
+    font-size: 16px;
+}
+
+.leaflet-popup-content-container .ebsoc-attachment-caption {
+    display: none;
+}
+
+.leaflet-sidebar .post-title {
+    color: maroon;
+    font-weight: 700;
+    text-align: center;
+    background: beige;
+    border: 1px solid darkgray;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.leaflet-sidebar .post-summary {
+    color: maroon;
+    font-weight: 700;
+    text-align: center;
+    margin: 3px;
+}
+
+.leaflet-sidebar .post-summary .moa-popup-label {
+    color: maroon;
+    float: left;
+    font-size: .8rem;
+}
+
+.leaflet-sidebar .post-summary .moa-popup-field {
+    margin-left: 150px;
+    text-align: left;
+}
+
+.leaflet-sidebar .post-summary .moa-popup-edit-link {
+    color: white !important;
+    background: var(--moa-blue);
+    padding: 5px 10px;
+    margin: 2%;
+    width: 96%;
+    display: block;
+}
+
+.leaflet-sidebar .post-summary .moa-popup-edit-link:hover {
+    background: maroon;
+}
+
+.leaflet-sidebar .post-summary .moa-popup-edit-link .moa-popup-label,
+.leaflet-sidebar .post-summary .moa-popup-edit-link a {
+    color: unset;
+}
+
+.leaflet-sidebar .post-summary .map-popup-content-field-desc {
+    margin: 5px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.leaflet-sidebar .leaflet-popup-image-container {
+    position: relative;
+}
+
+.leaflet-sidebar .leaflet-popup-image-container .map-popup-image {
+    margin: 2px;
+    box-sizing: border-box;
+}
+/* Map Popup - Container for additional images */
+.leaflet-sidebar .extra-pics-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.leaflet-sidebar .extra-pics-container div {
+    padding: 3px;
+}
+
+/* Map Popup - The user's picture, displays shifted so it overlaps the boat cover photo */
+.moa-popup-gravitar {
+    position: absolute;
+    right: 10px;
+    bottom: -37px;
+    z-index: 1;
+}
+
+.moa-popup-gravitar img {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    border: 4px solid white;
+}
+
+.leaflet-sidebar .leaflet-popup-image-container .map-popup-image:hover {
+    border: 2px solid maroon;
+}
+
+.ebsoc-attachment-image {
+    border: 1px solid darkgray;
+    width: 100%;
+}
+
+/*  #ebsoc-sidebar-drag{
+      background:green;
+      position:absolute;
+      right:5%px;
+      top: 40%;
+      bottom: 40%;
+      width: 8px;
+      z-index:1000;
+      cursor: w-resize;
+    } */
+.leaflet-popup-content-wrapper {
+    border-radius: 5px;
+    /* superceeds the default Leaflet popup box with very rounded corder of 12px */
+    /*  width: 300px; */
+}
+
+.leaflet-popup-content {
+    margin: 0px 0px;
+    padding: 5px;
+    clear: both;
+    overflow: hidden;
+    max-width: 290px;
+}
+
+.moa-popup-window .leaflet-popup-content-wrapper {
+    border-radius: 5px;
+    /* superceeds the default Leaflet popup box with very rounded corder of 12px */
+    width: 200px;
+}
+
+
+/***************************************************************
+  * LEAFLET TOOLTIP - Special icons Painting icon and SemiCircle
+  ***************************************************************/
+/****************
+   *  EBSOC SEMI-CIRCLE ICON - Leaflet SemiCircle Tooltip used on "constable-painting" perpsective view "open-eye" icon,
+   *  the code below undoes the std Leaflet tooltip CSS to make the eye-image appear without any background 
+   *****************/
+.ebsoc-painting-icon {
+    background: rgba(0, 0, 0, 0);
+    /* 4th arg is transparency, 0 makes background fully transparent */
+    /* color: rgba(0,0,0,0);     /* hide the text */
+    box-shadow: none;
+    border: none;
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    display: inline-block;
+}
+
+/******************
+    *  This is a div with tooltip text in it - made visible on hover over the icon image  
+    ******************/
+.ebsoc-painting-icon-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 200px;
+    padding: 0px 5px;
+    left: calc(100% - 100px);
+    line-height: 30px;
+    height: auto;
+    text-align: center;
+    vertical-align: middle;
+    overflow-wrap: break-word;
+    color: rgba(0, 0, 0, 1);
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 2px 2px #888888;
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* Note the selector below which displays the overal when mouse hovers over the icon  */
+.ebsoc-painting-icon:hover .ebsoc-painting-icon-overlay {
+    display: inline-table;
+}
+
+/************ End of Leaflet SemiCircle Icon & Icon Overlay (Tooltip) *****************/
+
+/********************************************************
+    * LEAFLET LAYER CONTROL -next two lines correct for Leaflet Layer Control (default z-index=1000)
+    * overlaying  the WP "OnerPress" sub-menu when its poppde down (default z-index=99)
+   *********************************************************/
+.leaflet-top, .leaflet-bottom {
+    z-index: 400;
+}
+
+.onepress-menu ul {
+    z-index: 401;
+}
+
+/* Leaflet Layer Control - deafult border is 2px, gray, opacity=0.2, here we make is more prominent */
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    background-color: var(--moa-blue);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+
+}
+
+.leaflet-touch .leaflet-control-layers label {
+    font-weight: 500 !important;
+    font-size: 14px;
+}
+
+/*
+  .leaflet-control-layers-toggle {
+      background-image: url(/images/map-layers-white.png)!important;
+  }
+  .leaflet-control-layers-toggle:hover {
+      background-color:var(--moa-blue-dark);
+  }
+  */
+
+.leaflet-bar a {
+    /*background-color:var(--moa-blue);*/
+    width: 30px !important;
+    height: 30px !important;
+    /*font-size: 28px !important;
+    line-height: 40px !important;
+    color: darkgray;
+    text-decoration: none;*/
+}
+/*.leaflet-bar a:hover {
+    background-color: var(--moa-blue-dark);
+    text-decoration: none;
+}
+*/.leaflet-bar a.leaflet-disabled {
+/*    background-color: var(--moa-blue);        /* shows when zoom control can;t go any higher or lower*/
+}
+
+.leaflet-draw-toolbar a, 
+.leaflet-control-styleeditor a, 
+.leaflet-control-styleeditor-interior {
+    width: 30px !important;
+    height: 30px !important;
+    background-color: white !important;
+}
+
+
+/*****
+  * LEAFLET SEARCH ICONS, remove box-shadow, make bigger, change background & colour and icon
+  ******/
+.leaflet-container .leaflet-control-search {
+    border-radius: 4px;
+    z-index: 10;
+    box-shadow: none
+}
+
+.leaflet-control-search .search-button {
+    background: url(/images/search-icon-24x24.png) no-repeat 5px 5px ;
+    width: 30px;
+    height: 30px;
+}
+
+
+.leaflet-control-search .search-button:hover {
+    background: url(/images/search-icon-24x24.png) no-repeat 5px 5px var(--moa-blue-dark);
+    filter: invert(100%);
+ 
+}
+
+/*** search box - change color depending on the post_type being searched ***/
+.moa-search-control-rowans-kelpies .search-button   { background-color: rgba(185, 105, 29, 0.8); border: 1px solid #4D4747;}
+.moa-search-control-mac-twenties .search-button     { background-color: rgba(147, 67, 194, 0.8);}
+.moa-search-control-mac-thirties .search-button     { background-color: rgba(46, 112, 33, 0.8)}
+.moa-search-control-mac-thirtyfives .search-button  { background-color: rgba(45, 91, 192, 0.767);}
+.moa-search-control-others .search-button           { background-color: rgba(89, 87, 97, 0.8);}
+
+.leaflet-control-search .search-input {
+    display: block;
+    float: left;
+    background: #fff;
+    border: 1px solid var(--moa-blue);
+    border-radius: 2px;
+    height: 36px;
+    font-size: 16px !important;
+    padding: 0 18px 0 2px;
+    margin: 3px 3px 3px 3px;
+}
+
+/* hide the map attribution at bottom of screen */
+.leaflet-control-attribution {
+    /* display: none; */
+}
+
+/**********************************************************
+    * LEAFLET POPUP ALIGNMENT - next three lines aligns display of yacht details in popup 
+    **********************************************************/
+.leaflet-popup-content div.label {
+    display: block;
+    width: calc(30% - 10px);
+    float: left;
+    font-size: .7rem;
+    padding: 3px;
+}
+
+.leaflet-popup-content div.moa-popup-field {
+    display: block;
+    width: calc(70% - 10px);
+    font-size: .8rem;
+    float: left;
+    padding: 3px;
+}
+
+/**********************************************************
+    * LEAFLET POPUP CONTENT - next line inserts a &nbsp; before <div> contents if the field is empty, solving
+    * problem of a empty div field collapsing the line height, without affecting non-empty fields
+    **********************************************************/
+.leaflet-popup-content div.moa-popup-field:empty:before {
+    content: '\a0';
+}
+
+.leaflet-popup-content-item {
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+/************************************************************/
+/*  LEAFLET MARKER 
+    /************************************************************/
+.leaflet-glyph-icon .fa-paint-brush {
+    font-size: 14px !important;
+    /* should be able to set this in code, but being overwritten to 21px by OnePress fontawesome stuff */
+}
+
+/************************************************************/
+/*  LEAFLET MARKER HOVER - next set of styles changes behaviour of leaflet marker popup on hover */
+/************************************************************/
+.leaflet-popup-content-moa-hover {
+    opacity: .8 !important;
+    width: 100px;
+    margin-bottom: 50px !important;
+}
+
+.leaflet-popup-content-moa-hover .leaflet-popup-content-wrapper {
+    border-radius: 5px;
+    /* overwrites default Leaflet popup box with very rounded corder of 12px */
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.leaflet-popup-content-moa-hover .leaflet-popup-content {
+    margin: 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* this style added to tooltips if isMobile(), added in  ebsoc-map-popup:CreateLayer() */
+.leaflet-tooltip-mobile {
+    transform: none !important;
+    display: none;
+}
+
+/* this style added to tooltips if NOT isMobile(), added in  ebsoc-map-popup:CreateLayer() */
+.leaflet-tooltip-ebsoc {
+    max-width: calc(var(--vw, 1vw) * 50);
+    min-width: 200px;
+    white-space: normal;
+    text-align: left;
+}
+
+#map-tooltip-fixed {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0px auto;
+    width: inherit;
+    color: black;
+    background: var(--tooltip-background-default);
+    font-size: 1.2rem;
+    height: 90px;
+    z-index: 500;
+    padding: 5px 10px 10px 10px;
+    cursor: pointer;
+    /* border-top:1px solid white;*/
+    /*box-shadow: 0px 0 4px rgba(0, 0, 0, 0.7);*/
+}
+
+div#map-tooltip-fixed {}
+
+#map-tooltip-fixed-title {
+    width: 100%;
+    color: white;
+    font-size: 8px;
+    font-size: min(calc(var(--vw, 1vw) * 2.5), 15px);
+    /*  padding: 5px 10px 10px 10px; */
+    font-size: 1em;
+}
+
+#map-tooltip-fixed-image {
+    width: 111px;
+    height: auto;
+    display: inline-block;
+    float: left;
+    margin: 5px 10px 0px 0px;
+    border: 1px white solid;
+    /* border-radius: 5px; */
+    font-size: 10px;
+}
+
+#map-tooltip-fixed-text {
+    width: 100%;
+    font-size: 14px;
+    color: white;
+    /*font-size: min(4.0vw, 25px);  */
+    /*font-size: min( calc(var(--vw, 1vw) * 2.0) , 14px)!important ;*/
+    font-size: min(calc(var(--vw, 1vw) * 2.5), 15px);
+    padding: 5px 10px 10px 10px;
+    font-size: .8em;
+}
+
+/***********************************************************
+* LEAFLET LONG/LAT ADDITIONS FOR MOA (not used by EBSOC)
+***********************************************************/
+.leaflet-popup-close-button {
+    display: none;
+}
+
+.leaflet-popup-content-moa-info {
+    background: #7b7878;
+    color: white;
+    padding: 3px;
+    line-height: 1.5rem;
+    border-radius: 3px;
+}
+
+.leaflet-popup-content-moa-lnglat {
+    background: white;
+    color: black;
+    padding: 3px;
+}
+
+.leaflet-popup-content-moa-tick {
+    color: rgb(90, 89, 89);
+    float: right;
+    font-size: large;
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+.leaflet-popup-content-moa-tick:hover {
+    color: red;
+}
+
+/***************************************************
+    ** LEAFLET MARKER CLUSTER STYLES
+    ** see Leaflet Plugin https://github.com/Leaflet/Leaflet.markercluster for details
+    ** Main styles set in MarkerCluster.Default.cssand  some extras in MarkerCluster.css
+    ***************************************************/
+.marker-cluster {
+    font-weight: bold;
+}
+
+.marker-cluster span {
+    /* Style for paintings cluster icon text */
+    /*  font-weight: 900;       /* This font-size & weight works for count of numbers */
+    /* font-size: 1rem;         */
+    font-weight: 500;
+    /* This font-size & weight works for single "+" sign */
+    font-size: 16px;
+    line-height: 30px;
+    color: white;
+}
+
+.marker-cluster-rowans-kelpies {
+    background-color: rgba(185, 105, 29, 0.8);
+    border-radius: 50px;
+}
+
+.marker-cluster-mac-twenties {
+    background-color: rgba(147, 67, 194, 0.8);
+    border-radius: 50px;
+}
+
+.marker-cluster-mac-thirties {
+    background-color: rgba(46, 112, 33, 0.8);
+    border-radius: 50px;
+}
+
+.marker-cluster-mac-thirtyfives {
+    background-color: rgba(45, 91, 192, 0.767);
+    border-radius: 50px;
+}
+
+.marker-cluster-others {
+    background-color: rgba(89, 87, 97, 0.8);
+    border-radius: 50px;
+}
+
+
+
+/*************************************************************
+* LEAFLET EASYPRINT PLUGIN - Leaflet EasyPrint print button, adds icons  for print types
+* see https://github.com/rowanwins/leaflet-easyPrint 
+**************************************************************/
+.easyPrintHolder .a3CssClassPortrait {
+    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0NC44MzMgNDQ0LjgzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgzMyA0NDQuODMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMjUsNDQ0LjgzM2gzMzQuMzMzYzkuMzUsMCwxNy03LjY1LDE3LTE3VjEzOS4xMTdjMC00LjgxNy0xLjk4My05LjM1LTUuMzgzLTEyLjQ2N0wyNjkuNzMzLDQuNTMzICAgIEMyNjYuNjE3LDEuNywyNjIuMzY3LDAsMjU4LjExNywwSDU1LjI1Yy05LjM1LDAtMTcsNy42NS0xNywxN3Y0MTAuODMzQzM4LjI1LDQzNy4xODMsNDUuOSw0NDQuODMzLDU1LjI1LDQ0NC44MzN6ICAgICBNMzcyLjU4MywxNDYuNDgzdjAuODVIMjU2LjQxN3YtMTA4LjhMMzcyLjU4MywxNDYuNDgzeiBNNzIuMjUsMzRoMTUwLjE2N3YxMzAuMzMzYzAsOS4zNSw3LjY1LDE3LDE3LDE3aDEzMy4xNjd2MjI5LjVINzIuMjVWMzR6ICAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+}
+
+/* supports Leaflet EasyPrint print button, see https://github.com/rowanwins/leaflet-easyPrint */
+.easyPrintHolder .a3CssClassLandscape {
+    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0NC44MzMgNDQ0LjgzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgzMyA0NDQuODMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMjUsNDQ0LjgzM2gzMzQuMzMzYzkuMzUsMCwxNy03LjY1LDE3LTE3VjEzOS4xMTdjMC00LjgxNy0xLjk4My05LjM1LTUuMzgzLTEyLjQ2N0wyNjkuNzMzLDQuNTMzICAgIEMyNjYuNjE3LDEuNywyNjIuMzY3LDAsMjU4LjExNywwSDU1LjI1Yy05LjM1LDAtMTcsNy42NS0xNywxN3Y0MTAuODMzQzM4LjI1LDQzNy4xODMsNDUuOSw0NDQuODMzLDU1LjI1LDQ0NC44MzN6ICAgICBNMzcyLjU4MywxNDYuNDgzdjAuODVIMjU2LjQxN3YtMTA4LjhMMzcyLjU4MywxNDYuNDgzeiBNNzIuMjUsMzRoMTUwLjE2N3YxMzAuMzMzYzAsOS4zNSw3LjY1LDE3LDE3LDE3aDEzMy4xNjd2MjI5LjVINzIuMjVWMzR6ICAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+}
+
+
+/********************************************************************
+* SIDEBAR FANCYBOX
+********************************************************************/
+.fancybox-container {
+    position: absolute !important;
+    height: 90vh !important;
+    width: 90vw !important;
+    left: 5vw !important;
+    top: 5vh !important;
+    box-shadow: 0px -2px 10px 2px rgba(0, 0, 0, 0.6);
+}
+
+.fancybox-slide--iframe .fancybox-content, .fancybox-slide--map .fancybox-content, .fancybox-slide--pdf .fancybox-content, .fancybox-slide--video .fancybox-content {
+    height: 80% !important;
+    width: 100% !important;
+    overflow: visible;
+    padding: 0;
+}
+
+/**************************************************
+* EBSOC PANORAMA VIEWPOINT - These styles support an outer container <div class="pano-div">, 
+* an inner image tage: <img class="pano-img"..> and an outer div tag showing the bearing <div id="pano-bearing">
+* This CSS supports img scrolling without JS. The scroll event is captured & used to update <div "pano-bearing"
+* we have img zoom done using the mouse scrollwheel (with "wheelzoom.js")
+**************************************************/
+.pano-div {
+    height: auto;
+    min-height: 200px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    left: 0;
+    max-width: none;
+}
+
+#pano-img {
+    /*     height:200px;
+        width:auto; 
+      max-width:none;
+   */
+    height: 200px;
+    min-height: 200px;
+    width: auto;
+    max-width: none;
+    min-width: 100%;
+}
+
+.pano-spread-text {
+    float: left;
+    position: absolute;
+    margin-left: 10px;
+    color: red;
+}
+
+.pano-direction-text {
+    position: relative;
+    left: 30%;
+    transform: translateX(-50%);
+    top: -20px;
+}
+
+.pano-bearing {
+    position: relative;
+    top: -20px;
+    background: white;
+    color: green;
+    opacity: 0.8;
+    width: 50px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 4px;
+    margin: 0 auto;
+    /* css trick for centering one div in another */
+}
+
+.pano-bearing:before {
+    /* draws an up-arrow on top of the bearing div to look like a compass indicator */
+    content: ' ';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 15px;
+    top: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+
+}
+
+.pano-bearing:after {
+    /* JS displays text when direction aligned with scrollbar */
+    content: '|--------- View Point -------|';
+    width: 400px;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    left: -175px;
+    top: -30px;
+    color: white;
+    display: block;
+}
+
+.pano-bearing-hide-after:after {
+    display: none;
+}
+

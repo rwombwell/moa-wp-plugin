@@ -1,0 +1,318 @@
+/***********************************************************************
+*  Copyright 2021-23 Rob Wombwell, Daemon Ltd. 
+************************************************************************/
+/******************************************
+* Styles to support MOA MAps, which are based on 
+* Leaflet map base and plugins: Omnivore (for displaying KML), EasyPrint (for printing maps), Leaflet-search
+* and Navionics Charts,
+*****************************************/
+/******************************************************************
+*  ALL @media SETTINGS DONE IN <theme>/onepresschild/styles.css
+* Media Settings for iPad Landscape (max-width:1024) 
+*******************************************************************/
+
+/*******************************
+********************************
+* Static Map - displayed in a <div ...> that isn't popped up. This uses LEAFLET map styles, 
+* beginning "leaflet.... ", some of which we overwrite below. 
+* There are also some new classes that we've added, beginning "moa-leaflet..." with associated CSS below.
+********************************
+*******************************/
+
+/********************************
+* STATIC MAP - Profile and Registration Form Map used for editing in 
+********************************/
+
+/******************
+* MAP-DIV - css to make map appear full screen 
+* NB, can't trust 100vh to be total screen height on mobile devices, so we use JS function  (loaded by functions.php) to set  a document root   
+* custom property (--vh and --vhHead) from window.innerHeight, fired each time a window.resize event triggers. from   https://css-tricks.com/the-trick-to-viewport-units-on-mobile/ 
+*******************/
+#map-div, #map-post, .map-post {
+  position: relative;
+  z-index: 10;
+  /* needs to be < footer arrow, which is 99,so arrow appears on top */
+  top: 0px;
+  left: 0px;
+  outline: none;
+  /* border: 1px solid black; */
+  /*height: 91vh;                      /* Fallback for browsers that do not support Custom Properties */
+  /*height: calc( (var(--vh, 1vh) * 100) - 96px)!important; /* -90px subtracts the menu bar height of 80px plus a 10px */
+  /*width: calc(var(--vw, 1vw) * 98);*/
+}
+
+/* need different size for mobile map, this class triggered by PHP isMobile() function with mobile display */
+.map-div-mobile {
+  /* top: -10px!important; */
+  height: 90vh;
+  /* Fallback for browsers that do not support Custom Properties */
+  height: calc((var(--vh, 1vh) * 100) - 90px) !important;
+  /* NB, using --vh variable corrects for mobile browser top bar showing/not showing */
+}
+
+.map-post-fullsize {
+  position: absolute !important;
+  z-index: 10;
+  top: 29px !important;
+  left: 0px;
+  outline: none;
+  /* border: 1px solid black; */
+  height: 800px !important;
+  /* height: calc(var(--vh, 1vh) * 90)!important; */
+  width: 99% !important;
+}
+
+#map-post-button {
+  position: absolute;
+  height: 27px;
+  top: 10px;
+  right: 61px;
+  z-index: 1401;
+  width: 130px;
+  background: var(--moa-blue);
+  border-radius: 5px !important;
+  border: 1px solid;
+  color: white;
+  background-color: var(--moa-blue) !important;
+}
+
+#map-post-button:hover {
+  background: bisque;
+}
+
+.map-post-button-normal::before {
+  content: "\25B2";
+  margin-right: 10px
+}
+
+.map-post-button-enlarged::before {
+  content: "\25BC";
+  margin-right: 10px
+}
+
+/*****  Static Map marker popup div **************/
+.static-view .leaflet-popup-content {
+  border-radius: 5px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  /* border:3px solid red; */
+}
+
+.popup-view .leaflet-popup-content {
+  border-radius: 5px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  /* border:3px solid red; */
+}
+
+/* BUG - in UM PROFILE PAGE - Leaflet marker icon points away from the point, caused by its margins getting
+  screwed up by forcing "margin:0!important" in <plugins>\ultimate-member\assets\css\um-profile.css 
+    "...
+    .um-profile img {display: block;overflow:hidden;border-radius:0;margin: 0 !important}"
+    ..."
+  Haven't found a way to undo that statement with CSS, so the workaround at the moment is to edit the 
+  UM profile style  after each UM update! Terrible, because the UM plugin gets updated a lot
+  */
+.moa-popup-window .leaflet-popup-content {
+  margin: 0px 0px;
+  padding: 5px;
+  clear: both;
+  overflow: hidden;
+  max-width: 190px
+}
+
+.leaflet-static-content-moa {
+  border-radius: 5px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*******************************
+* STATIC MAP - Media Styles to set different sizes for mobile display
+* Note most of these class are from UM Profile and Registration Forms, so start with ".um-...." 
+ *******************************/
+
+/* text block at top of the map overlay page, needs to vanish on small devices */
+@media screen and (max-height: 768px) {
+  .moa-leaflet-overlay-map-text-block {
+    display: none;
+  }
+}
+
+/* for very short screens take out the following paragraph as well */
+@media screen and (max-height: 425px) {
+  .moa-leaflet-overlay-map-text-block+p {
+    display: none;
+  }
+}
+
+/* on the registration page if the map has mouse focus then scrolling changes the map zoom, so helpful to highlite when map has focus */
+.um-field .map-div:hover {
+  box-sizing: border-box;
+  border: solid darkred 2px;
+
+}
+
+/* Change default Leaflet map zoom controls - default sets z-xindex=1000 which is unecessarily high & leaks over page header if display=fixed*/
+.leaflet-top, .leaflet-bottom {
+  z-index: 400;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 5px;
+  /* superceeds the default Leaflet popup box with very rounded corder of 12px */
+  /*  width: 300px; */
+}
+
+.leaflet-popup-content {
+  margin: 0px 0px;
+  padding: 5px;
+  clear: both;
+  overflow: hidden;
+  max-width: 290px
+}
+
+/* Change default Leaflet map zoom controls - default sets z-xindex=1000 which is unecessarily high & leaks over page header if display=fixed*/
+.leaflet-top, .leaflet-bottom {
+  z-index: 400;
+}
+
+.moa-popup-window .leaflet-popup-content-wrapper {
+  border-radius: 5px;
+  /* superceeds the default Leaflet popup box with very rounded corder of 12px */
+  width: 200px;
+}
+
+/*****  Static Map marker popup div **************/
+.static-view .leaflet-popup-content {
+  border-radius: 5px;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  /* border:3px solid red; */
+}
+
+.popup-view .leaflet-popup-content {
+  border-radius: 5px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  /* border:3px solid red; */
+}
+
+/**************
+*  BUG - in UM PROFILE PAGE - Leaflet marker icon points away from the point, caused by its margins getting
+* screwed up by forcing "margin:0!important" in <plugins>\ultimate-member\assets\css\um-profile.css 
+*  " .um-profile img {display: block;overflow:hidden;border-radius:0;margin: 0 !important}"
+* Haven't found a way to undo that statement with CSS, so the workaround at the moment is to edit the 
+*UM profile style  after each UM update! Terrible, because the UM plugin gets updated a lot
+*******************************/
+.moa-popup-window .leaflet-popup-content {
+  margin: 0px 0px;
+  padding: 5px;
+  clear: both;
+  overflow: hidden;
+  max-width: 190px
+}
+
+.leaflet-static-content-moa {
+  border-radius: 5px;
+  width: 150px;
+  min-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/********* next three lines aligns display of yacht details in popup *******/
+.leaflet-popup-content div.moa-popup-label {
+  display: block;
+  width: calc(30% - 10px);
+  float: left;
+  font-size: .7rem;
+  /*padding: 6px 3px;*/
+  color: black;
+  text-align: left;
+}
+
+.leaflet-popup-content div.moa-popup-field {
+  display: block;
+  width: calc(70% - 10px);
+  font-size: .8rem;
+  float: left;
+  /*padding: 3px;*/
+}
+
+/* next line inserts a &nbsp; before <div> contents if the field is empty, solving
+  * problem of a empty div field collapsing the line height, without affecting non-empty fields */
+.leaflet-popup-content div.moa-popup-field:empty:before {
+  content: '\a0';
+}
+
+.leaflet-popup-content-item {
+  border: 1px solid gray;
+  box-sizing: border-box;
+  padding: 3px;
+}
+
+/************************************************************/
+/*  next set of styles changes behaviour of leaflet marker popup on hover */
+/************************************************************/
+.leaflet-popup-content-moa-hover {
+  opacity: .8 !important;
+  width: 100px;
+  margin-bottom: 50px !important;
+}
+.leaflet-popup-content-moa-hover .leaflet-popup-content-wrapper {
+  border-radius: 5px;
+  /* superceeds the default Leaflet popup box with very rounded corder of 12px */
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.leaflet-popup-content-moa-hover .leaflet-popup-content {
+  margin: 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.leaflet-popup-close-button {
+  display: none;
+}
+
+.leaflet-popup-content-moa-info {
+  background: #7b7878;
+  color: white;
+  padding: 3px;
+  line-height: 1.5rem;
+  border-radius: 3px;
+}
+
+.leaflet-popup-content-moa-lnglat {
+  background: white;
+  color: black;
+  padding: 3px;
+}
+.leaflet-popup-content-moa-tick {
+  color: rgb(90, 89, 89);
+  float: right;
+  font-size: large;
+  font-weight: bold;
+  padding-right: 5px;
+}
+.leaflet-popup-content-moa-tick:hover {
+  color: red;
+}
+
+/* supports Leaflet EasyPrint print button, see https://github.com/rowanwins/leaflet-easyPrint */
+.easyPrintHolder .a3CssClassPortrait {
+  background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0NC44MzMgNDQ0LjgzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgzMyA0NDQuODMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMjUsNDQ0LjgzM2gzMzQuMzMzYzkuMzUsMCwxNy03LjY1LDE3LTE3VjEzOS4xMTdjMC00LjgxNy0xLjk4My05LjM1LTUuMzgzLTEyLjQ2N0wyNjkuNzMzLDQuNTMzICAgIEMyNjYuNjE3LDEuNywyNjIuMzY3LDAsMjU4LjExNywwSDU1LjI1Yy05LjM1LDAtMTcsNy42NS0xNywxN3Y0MTAuODMzQzM4LjI1LDQzNy4xODMsNDUuOSw0NDQuODMzLDU1LjI1LDQ0NC44MzN6ICAgICBNMzcyLjU4MywxNDYuNDgzdjAuODVIMjU2LjQxN3YtMTA4LjhMMzcyLjU4MywxNDYuNDgzeiBNNzIuMjUsMzRoMTUwLjE2N3YxMzAuMzMzYzAsOS4zNSw3LjY1LDE3LDE3LDE3aDEzMy4xNjd2MjI5LjVINzIuMjVWMzR6ICAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+}
+
+/* supports Leaflet EasyPrint print button, see https://github.com/rowanwins/leaflet-easyPrint */
+.easyPrintHolder .a3CssClassLandscape {
+  background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0NC44MzMgNDQ0LjgzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgzMyA0NDQuODMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMjUsNDQ0LjgzM2gzMzQuMzMzYzkuMzUsMCwxNy03LjY1LDE3LTE3VjEzOS4xMTdjMC00LjgxNy0xLjk4My05LjM1LTUuMzgzLTEyLjQ2N0wyNjkuNzMzLDQuNTMzICAgIEMyNjYuNjE3LDEuNywyNjIuMzY3LDAsMjU4LjExNywwSDU1LjI1Yy05LjM1LDAtMTcsNy42NS0xNywxN3Y0MTAuODMzQzM4LjI1LDQzNy4xODMsNDUuOSw0NDQuODMzLDU1LjI1LDQ0NC44MzN6ICAgICBNMzcyLjU4MywxNDYuNDgzdjAuODVIMjU2LjQxN3YtMTA4LjhMMzcyLjU4MywxNDYuNDgzeiBNNzIuMjUsMzRoMTUwLjE2N3YxMzAuMzMzYzAsOS4zNSw3LjY1LDE3LDE3LDE3aDEzMy4xNjd2MjI5LjVINzIuMjVWMzR6ICAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+}
+

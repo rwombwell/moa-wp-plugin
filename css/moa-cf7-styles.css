@@ -1,0 +1,238 @@
+@charset "ISO-8859-1";
+/***************************************************
+** CONTACT FORM 7 
+** Styling for Contact Form 7 background, lables and fields. Applies  to  all CF7 forms.
+** Note if multi-column fields are wanted then the CF7 will reuse the  ".one_half" definitions defiedn above for ALL PAGES. Then
+** the fields need to be set inside <div class="one-half">..</div>  and <div class="one-half last">..</div> tags
+**
+** see this ref on STyling Contact Form
+**
+***************************************************/
+/* Form Background style*/
+.wpcf7-form {
+	/* margin-top: -50px; */
+ 	/* 
+ 		background-color:#bed7e8;;
+     	padding:20px;
+        background:
+        url("/wp-content/gallery/macwester-gallery/db.JPG") 
+        no-repeat center center fixed ;
+	    -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    background-size: cover; 
+    */
+}
+
+
+/*  Put a border around the Address Bock and PayPal Block, note display is off, blocks get displayed as needed via a jQuery */
+#address-block, #paypal-block-renewal,  #paypal-block-new-member,  #paypal-block-details   {
+	background-color:#dcdcdc;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #b3b3bb;
+	border-radius: 6px;
+	padding: 0px 10px 15px 10px;
+	margin: 10px 10px 10px 10px;
+	display:none;
+}
+/* Address block comes second down thw page & needs special positioning */
+#address-block {
+	margin-top: 10px;
+	/*padding-bottom: 60px;*/
+	display:none;
+}
+
+/* These are the message content elements that appear within the block, set their font charactistics here */  
+#address-msg, #paypal-renewal-msg,  #paypal-new-member-msg, #paypal-details-msg, #paypal-callback-block,  
+#paypal-callback-cancelled-msg, #paypal-callback-success-msg {
+	font-size: .75em;
+	line-height: 1.3em;
+	margin-bottom: 0px;
+	display: block;
+	font-size: 1rem;
+	line-height: 1.5;
+	/* margin-bottom: 5px; */
+}
+
+#paypal-callback-cancelled-msg, #paypal-callback-success-msg  {
+	background-color:#dcdcdc;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #b3b3bb;
+	border-radius: 6px;
+	padding: 0px 10px 5px 10px;
+	margin: 10px;
+	padding: 10px;
+	color: brown;
+	display: none;
+	font-size: 1rem;
+	line-height: 1.4;
+}
+.wpcf7-form .paypal-callback-title {
+	font-size: 1rem;
+	font-weight: 600;
+	/* line-height: 1.5!important; */
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+/* Align Send & Cancel Buttons - and PayPal button - Vertically align the Send & Cancel buttons together. Requires a 
+<div> boxaround the Send & CAncel butons eg <div class="form-button-block"> ...</div> */
+.wpcf7-form .form-button-bar, .wpcf7-form .paypal-button {
+	/* display: flex; */ 
+	display: none;
+	align-items: flex-start;
+    justify-content: flex-end;
+}
+/* and we want to move the Sedn and cancel buttons up a bit */
+.wpcf7-form .form-button-bar {
+	margin-top: -87px;
+}
+
+/* These values are set in OnePress styles.css :3041, and are rubbish, so reset them here */
+.wpcf7-form {
+    text-transform:unset!important;
+    font-size: unset!important;
+    letter-spacing: unset!important;
+    font-weight: unset!important;
+    color: black;
+  }
+
+/*Form Input fields block. Sets a style which vertically aligns the fields */
+.wpcf7-form-control-wrap {
+ /*   position: absolute;*/
+    display: inline-block;
+    padding-left: 10px;
+    width: 240px;
+}
+
+/*Picture Notes need to be bigger box  */
+.wpcf7-form .picture-notes{
+       width: 500px;
+}
+   
+/*Form Label style - for contents of <label>..</label> tags */
+.wpcf7-form label {
+    font-size: 14px;
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+    padding-right: 30%;
+    margin-bottom: 10px;
+    line-height: 1.8;
+    text-transform: none;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+}
+
+/* in addition move the PayPal button up a bit */
+.wpcf7-form .paypal-button,
+#paypal-block-new-member button.paypal-button,
+#paypal-block-new-member .button#form-cancel{
+     padding: 7px 18px 7px !important;
+     /*  display: inline-block !important; */
+     color: #ffff;
+     /* margin-top: 5px !important; */
+     margin-right: 10px !important; 
+     -webkit-border-radius: 4px !important;
+     -moz-border-radius: 4px !important;
+     border-radius: 4px !important;
+     cursor: pointer !important;
+     text-transform: uppercase !important;
+     font-size: 14px !important;
+     border: none !important;
+     background-color: var(--moa-btn-color);
+}
+
+.wpcf7-form input[type="text"], 
+.wpcf7-form input[type="email"],
+.wpcf7-form  input[type="url"], 
+.wpcf7-form input[type="password"], 
+.wpcf7-form input[type="search"], 
+.wpcf7-form textarea,
+.wpcf7-form select {
+    padding: 0.1em 0.6em!important; 
+    background-color: rgb(242,242,242)!important;
+    max-width: 100%!important;
+    border: 1px solid darkgray!important;
+    color: #666!important;
+   -moz-border-radius: 4px!important;
+    border-radius: 4px!important;
+    font-size: 14px !important;
+    line-height: 12px!important;
+
+ }
+ .wpcf7-form  input:read-only {
+  background-color: #fafafa;
+}
+ .wpcf7-form input[type="submit"], 
+ .wpcf7-form input[type="button"], 
+ .wpcf7-form #form-cancel {
+    height:32px;
+    padding: 7px 18px 7px !important;
+    display: inline-block !important;
+    /*margin-top: 10px !important;*/
+    margin-right: 25px !important;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    text-transform: uppercase !important;
+    font-size: 14px !important;
+    font-weight: normal;
+    border: none !important;
+    /*margin-left: 20px;*/
+    background-color: var(--moa-btn-color);
+    color:white;
+}
+ /*----------------- rest is commented out -----------*/
+/* Form field styles - the selector based on the field type */
+/*
+.wpcf7-form > input[type="text"],input[type="email"],select, textarea, text, input[type="tel"], input[type="url"] 
+{
+    background: #fff;
+    border: 1px solid #7a746d;
+    -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: 14px !important;
+    width: 220px;
+    padding: 5px !important;
+}
+
+.wpcf7-form select{
+    width:300px;
+    text-align: left;
+}
+.wpcf7-form input:focus, select:focus, textarea:focus {
+    background: #ffffde;
+ }
+ .wpcf7-form textarea {
+    width: 480px;
+    height: 150px;
+    padding: 5px !important;
+    font-size: 14px !important;
+}
+ span.wpcf7-list-item { 
+   display: block; 
+}
+.wpcf7-form input[type="submit"], input[type="button"]{
+    padding: 7px 18px 7px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+    border: none;
+}
+*/
+
